@@ -18,6 +18,12 @@ Twig_Autoloader::register();
 $loader = new Twig_Loader_Filesystem('tpl');
 $twig = new Twig_Environment($loader);
 
+$twig = new Twig_Environment($loader, array(
+    'debug' => true,
+));
+$twig->addExtension(new Twig_Extension_Debug());
+
+
 if (! check_get('option') ) { exit; }
 $option = $_GET['option'];
 
@@ -83,7 +89,8 @@ switch ($option) {
 
 //----------------------------------------------------------------------------------------------------------
 function not_yet () {
-	echo '<h3>Este mecanismo para ser construido precisa da definição de requisitos, logo que a definição será aprovada, o mecanismo entrerá em função. De momento é possível redigir o relatório a nível distrital</h3>';
+	echo '<h3>De momento é possível redigir o relatório apenas a nível distrital</h3>';
+	echo '<p>Este mecanismo para ser construido precisa da definição de requisitos, logo que a definição será aprovada, o mecanismo relativo aos outros níveis, entrerá em função.</p>';
 }
 //----------------------------------------------------------------------------------------------------------
 function write_report ($con, $pe, $fo, $no, $ous, $le, $paper, $twig, $debug) {
@@ -141,6 +148,7 @@ array_push($direct_children , ['id' => $row[0], 'name' => $row[1]] );
 $form_template_file = $form_name . '_' . $le . '.html' ;
 
 $td_data_standard_style = 'text-align:center;vertical-align:middle;border:solid black 1px;';
+$td_total_standard_style = 'text-align:center;vertical-align:middle;border:solid black 1px;background-color:lightgrey;';
 
 
 // acquisisci la lista dei dataelement que sono inclusi nel dataset
@@ -203,6 +211,7 @@ $template_array = array(
 	'rep_ano' => $endyear,
 	'rep_prv' => $parentname_chosen_ou,
 	'rep_data_style' => $td_data_standard_style,
+	'rep_total_style' => $td_total_standard_style,
 	'aggregated_sum' => $aggregated_sum
 			);
 
