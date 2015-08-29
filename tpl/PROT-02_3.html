@@ -73,39 +73,68 @@
 		</tr>
 
 <!-- ini data -->
+
+{% set nsem = 0 %}
+{% set nsem_tot = 0 %}
+{% set sem_f_tot = 0 %}
+{% set sem_m_tot = 0 %}
+{% set npal = 0 %}
+{% set npal_tot = 0 %}
+{% set pal_f_tot = 0 %}
+{% set pal_m_tot = 0 %}
+{% set tel_tot = 0 %}
+{% set rad_tot = 0 %}
+
 {% for key, data in aggregated_sum %}
+
+{% if data["PROT-02_01"] + data["PROT-02_02"] > 0 %}
+{% set nsem = 1 %}
+{% endif %}
+
+{% if data["PROT-04_01"] + data["PROT-02_05"] > 0 %}
+{% set npal = 1  %}
+{% endif %}
+
+{% set nsem_tot = nsem_tot + nsem %}
+{% set sem_f_tot = sem_f_tot + data["PROT-02_01"] %}
+{% set sem_m_tot = sem_m_tot + data["PROT-02_02"] %}
+{% set npal_tot = npal_tot + npal  %}
+{% set pal_f_tot = pal_f_tot + data["PROT-02_04"] %}
+{% set pal_m_tot = pal_m_tot + data["PROT-02_05"] %}
+{% set tel_tot = tel_tot + data["PROT-02_07"] %}
+{% set rad_tot = rad_tot + data["PROT-02_08"] %}
+
 <tr>
 <td style="{{rep_data_style}}">{{loop.index}}</td>
 <td style="text-align:left;vertical-align:middle;border:solid black 1px;font-weight:bold;">{{key}}</td>
-<td style="{{rep_data_style}}" id="count_01_{{loop.index}}"></td>
-<td style="{{rep_data_style}}" id="sum_01_{{loop.index}}">{{ data["PROT-02_01"] }}</td>
-<td style="{{rep_data_style}}" id="sum_02_{{loop.index}}">{{ data["PROT-02_02"] }}</td>
-<td style="{{rep_total_style}}" id="sum_01_02_{{loop.index}}"></td>
-<td style="{{rep_data_style}}" id="count_04_{{loop.index}}"></td>
-<td style="{{rep_data_style}}" id="sum_04_{{loop.index}}">{{ data["PROT-02_04"] }}</td>
-<td style="{{rep_data_style}}" id="sum_05_{{loop.index}}">{{ data["PROT-02_05"] }}</td>
-<td style="{{rep_total_style}}" id="sum_04_05_{{loop.index}}"></td>
-<td style="{{rep_data_style}}" id="sum_07_{{loop.index}}">{{ data["PROT-02_07"] }}</td>
-<td style="{{rep_data_style}}" id="sum_08_{{loop.index}}">{{ data["PROT-02_08"] }}</td>
+<td style="{{rep_data_style}}" id="count_01_{{loop.index}}">{{nsem}}</td>
+<td style="{{rep_data_style}}" id="sum_01_{{loop.index}}">{{data["PROT-02_01"]}}</td>
+<td style="{{rep_data_style}}" id="sum_02_{{loop.index}}">{{data["PROT-02_02"]}}</td>
+<td style="{{rep_total_style}}" id="sum_01_02_{{loop.index}}">{{ data["PROT-02_01"] + data["PROT-02_02"] }}</td>
+<td style="{{rep_data_style}}" id="count_04_{{loop.index}}">{{npal}}</td>
+<td style="{{rep_data_style}}" id="sum_04_{{loop.index}}">{{data["PROT-02_04"]}}</td>
+<td style="{{rep_data_style}}" id="sum_05_{{loop.index}}">{{data["PROT-02_05"]}}</td>
+<td style="{{rep_total_style}}" id="sum_04_05_{{loop.index}}">{{ data["PROT-02_04"] + data["PROT-02_05"] }}</td>
+<td style="{{rep_data_style}}" id="sum_07_{{loop.index}}">{{data["PROT-02_07"]}}</td>
+<td style="{{rep_data_style}}" id="sum_08_{{loop.index}}">{{data["PROT-02_08"]}}</td>
 </tr>
 
-<!-- la somma deve essere calcolata all'interno del loop -->
-
 {% endfor %}
+
 <!-- end data -->
 
 <tr style="background-color:lightgrey;font-weight:bold;">
 <td colspan="2" style="{{rep_data_style}}">Total</td>
-<td style="{{rep_data_style}}" id="sum_mulheres_01"></td>
-<td style="{{rep_data_style}}" id="sum_mulheres_02"></td>
-<td style="{{rep_data_style}}" id="sum_mulheres_03"></td>
-<td style="{{rep_data_style}}" id="sum_mulheres_04"></td>
-<td style="{{rep_data_style}}" id="sum_mulheres_05"></td>
-<td style="{{rep_data_style}}" id="sum_mulheres_06"></td>
-<td style="{{rep_data_style}}" id="sum_mulheres_07"></td>
-<td style="{{rep_data_style}}" id="sum_mulheres_08"></td>
-<td style="{{rep_data_style}}" id="sum_mulheres_09"></td>
-<td style="{{rep_data_style}}" id="sum_mulheres_10"></td>
+<td style="{{rep_data_style}}" id="sum_mulheres_01">{{nsem_tot}}</td>
+<td style="{{rep_data_style}}" id="sum_mulheres_02">{{sem_f_tot}}</td>
+<td style="{{rep_data_style}}" id="sum_mulheres_03">{{sem_m_tot}}</td>
+<td style="{{rep_data_style}}" id="sum_mulheres_04">{{sem_f_tot + sem_m_tot}}</td>
+<td style="{{rep_data_style}}" id="sum_mulheres_05">{{npal_tot}}</td>
+<td style="{{rep_data_style}}" id="sum_mulheres_06">{{pal_f_tot}}</td>
+<td style="{{rep_data_style}}" id="sum_mulheres_07">{{pal_m_tot}}</td>
+<td style="{{rep_data_style}}" id="sum_mulheres_08">{{pal_f_tot + pal_m_tot}}</td>
+<td style="{{rep_data_style}}" id="sum_mulheres_09">{{tel_tot}}</td>
+<td style="{{rep_data_style}}" id="sum_mulheres_10">{{rad_tot}}</td>
 </tr>
 
 	</tbody>
