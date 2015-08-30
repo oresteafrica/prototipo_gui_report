@@ -89,8 +89,8 @@ switch ($option) {
 
 //----------------------------------------------------------------------------------------------------------
 function not_yet () {
-	echo '<h3>De momento é possível redigir o relatório apenas a nível distrital</h3>';
-	echo '<p>Este mecanismo para ser construido precisa da definição de requisitos, logo que a definição será aprovada, o mecanismo relativo aos outros níveis, entrerá em função.</p>';
+	echo '<h3>É possível redigir o relatório apenas a nível distrital</h3>';
+	echo '<p>Níveis acima do distrital serão redigidos pelo software Masinfo/Devinfo</p>';
 }
 //----------------------------------------------------------------------------------------------------------
 function write_report ($con, $pe, $fo, $no, $ous, $le, $paper, $twig, $debug) {
@@ -134,8 +134,10 @@ $chosen_ou = $row[0];
 $parentid_chosen_ou = $row[1];
 }
 
+if (!$parentid_chosen_ou) { $parentid_chosen_ou = 0; }
+
 $result = pg_query($con, 'SELECT name FROM organisationunit WHERE organisationunitid = ' . $parentid_chosen_ou);
-if (!$result) { echo "<p>Error opening organisationunit</p>\n"; exit; }
+if (!$result) { echo '<p>Error opening organisationunit, $parentid_chosen_ou = '.$parentid_chosen_ou.'</p>'; exit; }
 $parentname_chosen_ou = pg_fetch_assoc($result)['name'];
 
 $direct_children = [];
