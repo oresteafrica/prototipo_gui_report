@@ -213,8 +213,39 @@
 			<td style="text-align:center;vertical-align:middle;border:solid black 1px;">Masc.</td>
 			<td style="text-align:center;vertical-align:middle;border:solid black 1px;">Total</td>
 		</tr>
+
 <!-- ini data -->
+
+{% set nsem = 0 %}
+{% set nsem_tot = 0 %}
+{% set sem_f_tot = 0 %}
+{% set sem_m_tot = 0 %}
+{% set npal = 0 %}
+{% set npal_tot = 0 %}
+{% set pal_f_tot = 0 %}
+{% set pal_m_tot = 0 %}
+{% set tel_tot = 0 %}
+{% set rad_tot = 0 %}
+
 {% for key, data in aggregated_sum %}
+
+{% if data["PROT-02_09"] + data["PROT-02_10"] > 0 %}
+{% set nsem = 1 %}
+{% endif %}
+
+{% if data["PROT-04_12"] + data["PROT-02_13"] > 0 %}
+{% set npal = 1  %}
+{% endif %}
+
+{% set nsem_tot = nsem_tot + nsem %}
+{% set sem_f_tot = sem_f_tot + data["PROT-02_09"] %}
+{% set sem_m_tot = sem_m_tot + data["PROT-02_10"] %}
+{% set npal_tot = npal_tot + npal  %}
+{% set pal_f_tot = pal_f_tot + data["PROT-02_12"] %}
+{% set pal_m_tot = pal_m_tot + data["PROT-02_13"] %}
+{% set tel_tot = tel_tot + data["PROT-02_15"] %}
+{% set rad_tot = rad_tot + data["PROT-02_16"] %}
+
 <tr>
 <td style="{{rep_data_style}}">{{loop.index}}</td>
 <td style="text-align:left;vertical-align:middle;border:solid black 1px;font-weight:bold;">{{key}}</td>
@@ -229,21 +260,23 @@
 <td style="{{rep_data_style}}" id="sum_15_{{loop.index}}">{{ data["PROT-02_15"] }}</td>
 <td style="{{rep_data_style}}" id="sum_16_{{loop.index}}">{{ data["PROT-02_16"] }}</td>
 </tr>
+
 {% endfor %}
+
 <!-- end data -->
 
 <tr style="background-color:lightgrey;font-weight:bold;">
 <td colspan="2" style="{{rep_data_style}}">Total</td>
-<td style="{{rep_data_style}}" id="sum_criancas_01"></td>
-<td style="{{rep_data_style}}" id="sum_criancas_02"></td>
-<td style="{{rep_data_style}}" id="sum_criancas_03"></td>
-<td style="{{rep_data_style}}" id="sum_criancas_04"></td>
-<td style="{{rep_data_style}}" id="sum_criancas_05"></td>
-<td style="{{rep_data_style}}" id="sum_criancas_06"></td>
-<td style="{{rep_data_style}}" id="sum_criancas_07"></td>
-<td style="{{rep_data_style}}" id="sum_criancas_08"></td>
-<td style="{{rep_data_style}}" id="sum_criancas_09"></td>
-<td style="{{rep_data_style}}" id="sum_criancas_10"></td>
+<td style="{{rep_data_style}}" id="sum_criancas_01">{{nsem_tot}}</td>
+<td style="{{rep_data_style}}" id="sum_criancas_02">{{sem_f_tot}}</td>
+<td style="{{rep_data_style}}" id="sum_criancas_03">{{sem_m_tot}}</td>
+<td style="{{rep_data_style}}" id="sum_criancas_04">{{sem_f_tot + sem_m_tot}}</td>
+<td style="{{rep_data_style}}" id="sum_criancas_05">{{npal_tot}}</td>
+<td style="{{rep_data_style}}" id="sum_criancas_06">{{pal_f_tot}}</td>
+<td style="{{rep_data_style}}" id="sum_criancas_07">{{pal_m_tot}}</td>
+<td style="{{rep_data_style}}" id="sum_criancas_08">{{pal_f_tot + pal_m_tot}}</td>
+<td style="{{rep_data_style}}" id="sum_criancas_09">{{tel_tot}}</td>
+<td style="{{rep_data_style}}" id="sum_criancas_10">{{rad_tot}}</td>
 </tr>
 
 	</tbody>
@@ -323,8 +356,39 @@
 		</tr>
 		<tr>
 		</tr>
+
 <!-- ini data -->
+
+{% set nsem = 0 %}
+{% set nsem_tot = 0 %}
+{% set sem_f_tot = 0 %}
+{% set sem_m_tot = 0 %}
+{% set npal = 0 %}
+{% set npal_tot = 0 %}
+{% set pal_f_tot = 0 %}
+{% set pal_m_tot = 0 %}
+{% set tel_tot = 0 %}
+{% set rad_tot = 0 %}
+
 {% for key, data in aggregated_sum %}
+
+{% if data["PROT-02_17"] + data["PROT-02_18"] > 0 %}
+{% set nsem = 1 %}
+{% endif %}
+
+{% if data["PROT-04_20"] + data["PROT-02_21"] > 0 %}
+{% set npal = 1  %}
+{% endif %}
+
+{% set nsem_tot = nsem_tot + nsem %}
+{% set sem_f_tot = sem_f_tot + data["PROT-02_17"] %}
+{% set sem_m_tot = sem_m_tot + data["PROT-02_18"] %}
+{% set npal_tot = npal_tot + npal  %}
+{% set pal_f_tot = pal_f_tot + data["PROT-02_20"] %}
+{% set pal_m_tot = pal_m_tot + data["PROT-02_21"] %}
+{% set tel_tot = tel_tot + data["PROT-02_23"] %}
+{% set rad_tot = rad_tot + data["PROT-02_24"] %}
+
 <tr>
 <td style="{{rep_data_style}}">{{loop.index}}</td>
 <td style="text-align:left;vertical-align:middle;border:solid black 1px;font-weight:bold;">{{key}}</td>
@@ -339,23 +403,24 @@
 <td style="{{rep_data_style}}" id="sum_23_{{loop.index}}">{{ data["PROT-02_23"] }}</td>
 <td style="{{rep_data_style}}" id="sum_24_{{loop.index}}">{{ data["PROT-02_24"] }}</td>
 </tr>
+
 {% endfor %}
+
 <!-- end data -->
 
 <tr style="background-color:lightgrey;font-weight:bold;">
 <td colspan="2" style="{{rep_data_style}}">Total</td>
-<td style="{{rep_data_style}}" id="sum_idosos_01"></td>
-<td style="{{rep_data_style}}" id="sum_idosos_02"></td>
-<td style="{{rep_data_style}}" id="sum_idosos_03"></td>
-<td style="{{rep_data_style}}" id="sum_idosos_04"></td>
-<td style="{{rep_data_style}}" id="sum_idosos_05"></td>
-<td style="{{rep_data_style}}" id="sum_idosos_06"></td>
-<td style="{{rep_data_style}}" id="sum_idosos_07"></td>
-<td style="{{rep_data_style}}" id="sum_idosos_08"></td>
-<td style="{{rep_data_style}}" id="sum_idosos_09"></td>
-<td style="{{rep_data_style}}" id="sum_idosos_10"></td>
+<td style="{{rep_data_style}}" id="sum_idosos_01">{{nsem_tot}}</td>
+<td style="{{rep_data_style}}" id="sum_idosos_02">{{sem_f_tot}}</td>
+<td style="{{rep_data_style}}" id="sum_idosos_03">{{sem_m_tot}}</td>
+<td style="{{rep_data_style}}" id="sum_idosos_04">{{sem_f_tot + sem_m_tot}}</td>
+<td style="{{rep_data_style}}" id="sum_idosos_05">{{npal_tot}}</td>
+<td style="{{rep_data_style}}" id="sum_idosos_06">{{pal_f_tot}}</td>
+<td style="{{rep_data_style}}" id="sum_idosos_07">{{pal_m_tot}}</td>
+<td style="{{rep_data_style}}" id="sum_idosos_08">{{pal_f_tot + pal_m_tot}}</td>
+<td style="{{rep_data_style}}" id="sum_idosos_09">{{tel_tot}}</td>
+<td style="{{rep_data_style}}" id="sum_idosos_10">{{rad_tot}}</td>
 </tr>
-
 
 	</tbody>
 </table>
@@ -434,8 +499,39 @@
 		</tr>
 		<tr>
 		</tr>
+
 <!-- ini data -->
+
+{% set nsem = 0 %}
+{% set nsem_tot = 0 %}
+{% set sem_f_tot = 0 %}
+{% set sem_m_tot = 0 %}
+{% set npal = 0 %}
+{% set npal_tot = 0 %}
+{% set pal_f_tot = 0 %}
+{% set pal_m_tot = 0 %}
+{% set tel_tot = 0 %}
+{% set rad_tot = 0 %}
+
 {% for key, data in aggregated_sum %}
+
+{% if data["PROT-02_25"] + data["PROT-02_26"] > 0 %}
+{% set nsem = 1 %}
+{% endif %}
+
+{% if data["PROT-04_28"] + data["PROT-02_29"] > 0 %}
+{% set npal = 1  %}
+{% endif %}
+
+{% set nsem_tot = nsem_tot + nsem %}
+{% set sem_f_tot = sem_f_tot + data["PROT-02_25"] %}
+{% set sem_m_tot = sem_m_tot + data["PROT-02_26"] %}
+{% set npal_tot = npal_tot + npal  %}
+{% set pal_f_tot = pal_f_tot + data["PROT-02_28"] %}
+{% set pal_m_tot = pal_m_tot + data["PROT-02_29"] %}
+{% set tel_tot = tel_tot + data["PROT-02_31"] %}
+{% set rad_tot = rad_tot + data["PROT-02_32"] %}
+
 <tr>
 <td style="{{rep_data_style}}">{{loop.index}}</td>
 <td style="text-align:left;vertical-align:middle;border:solid black 1px;font-weight:bold;">{{key}}</td>
@@ -451,20 +547,21 @@
 <td style="{{rep_data_style}}" id="sum_32_{{loop.index}}">{{ data["PROT-02_32"] }}</td>
 </tr>
 {% endfor %}
+
 <!-- end data -->
 
 <tr style="background-color:lightgrey;font-weight:bold;">
 <td colspan="2" style="{{rep_data_style}}">Total</td>
-<td style="{{rep_data_style}}" id="sum_deficientes_01"></td>
-<td style="{{rep_data_style}}" id="sum_deficientes_02"></td>
-<td style="{{rep_data_style}}" id="sum_deficientes_03"></td>
-<td style="{{rep_data_style}}" id="sum_deficientes_04"></td>
-<td style="{{rep_data_style}}" id="sum_deficientes_05"></td>
-<td style="{{rep_data_style}}" id="sum_deficientes_06"></td>
-<td style="{{rep_data_style}}" id="sum_deficientes_07"></td>
-<td style="{{rep_data_style}}" id="sum_deficientes_08"></td>
-<td style="{{rep_data_style}}" id="sum_deficientes_09"></td>
-<td style="{{rep_data_style}}" id="sum_deficientes_10"></td>
+<td style="{{rep_data_style}}" id="sum_deficientes_01">{{nsem_tot}}</td>
+<td style="{{rep_data_style}}" id="sum_deficientes_02">{{sem_f_tot}}</td>
+<td style="{{rep_data_style}}" id="sum_deficientes_03">{{sem_m_tot}}</td>
+<td style="{{rep_data_style}}" id="sum_deficientes_04">{{sem_f_tot + sem_m_tot}}</td>
+<td style="{{rep_data_style}}" id="sum_deficientes_05">{{npal_tot}}</td>
+<td style="{{rep_data_style}}" id="sum_deficientes_06">{{pal_f_tot}}</td>
+<td style="{{rep_data_style}}" id="sum_deficientes_07">{{pal_m_tot}}</td>
+<td style="{{rep_data_style}}" id="sum_deficientes_08">{{pal_f_tot + pal_m_tot}}</td>
+<td style="{{rep_data_style}}" id="sum_deficientes_09">{{tel_tot}}</td>
+<td style="{{rep_data_style}}" id="sum_deficientes_10">{{rad_tot}}</td>
 </tr>
 
 	</tbody>
