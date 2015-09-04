@@ -251,7 +251,7 @@ echo '<p>$dataelementids = ' . implode(';', $dataelementids) .  '</p>';
 
 !Kint::dump( $aggregated_sum );
 
-echo '<p>$aggregated_sum[\'PA Maluana\'][\'PROT-02_07\'] = '. $aggregated_sum['PA Maluana']['PROT-02_07'] . '</p>';
+// echo '<p>$aggregated_sum[\'PA Maluana\'][\'PROT-02_07\'] = '. $aggregated_sum['PA Maluana']['PROT-02_07'] . '</p>';
 
 
 return;
