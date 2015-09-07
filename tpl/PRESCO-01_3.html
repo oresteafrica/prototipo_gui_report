@@ -134,38 +134,14 @@ caption {
 			<td rowspan="3">N&ordm; Ord.</td>
 			<td rowspan="3">Posto administrativo</td>
 			<td colspan="10">Centro Infantis Públicos</td>
-			<td colspan="10">Centro Infantis Privados</td>
-			<td colspan="7">Escolinhas Comunitárias</td>
 		</tr>
 		<tr>
 			<td rowspan="2">N&ordm; de Centros Infantis Públicos</td>
 			<td colspan="3">N&ordm; de Educadores</td>
 			<td colspan="3">N&ordm; de Educadores sem formação</td>
 			<td colspan="3">N&ordm; de Crianças atendidas</td>
-			<td rowspan="2">N&ordm; de Centros Infantis Privados</td>
-			<td colspan="3">N&ordm; de Educadores</td>
-			<td colspan="3">N&ordm; de Educadores sem formação</td>
-			<td colspan="3">N&ordm; de Crianças atendidas</td>
-			<td rowspan="2">N&ordm; de Escolinhas Comunitárias</td>
-			<td colspan="3">N&ordm; de Animadores</td>
-			<td colspan="3">N&ordm; de Crianças atendidas</td>
 		</tr>
 		<tr>
-			<td>F</td>
-			<td>M</td>
-			<td>Total</td>
-			<td>F</td>
-			<td>M</td>
-			<td>Total</td>
-			<td>F</td>
-			<td>M</td>
-			<td>Total</td>
-			<td>F</td>
-			<td>M</td>
-			<td>Total</td>
-			<td>F</td>
-			<td>M</td>
-			<td>Total</td>
 			<td>F</td>
 			<td>M</td>
 			<td>Total</td>
@@ -180,72 +156,256 @@ caption {
 
 <!-- ini data -->
 
+{% set ncentros = 0 %}
+{% set ncentros_tot = 0 %}
 
+{% set neduf = 0 %}
+{% set nedum = 0 %}
+
+{% set nedusemf = 0 %}
+{% set nedusemm = 0 %}
+
+{% set necrf = 0 %}
+{% set necrm = 0 %}
+
+{% set PRESCO01_01_TOT = 0 %}
+{% set PRESCO01_02_TOT = 0 %}
+{% set PRESCO01_04_TOT = 0 %}
+{% set PRESCO01_05_TOT = 0 %}
+{% set PRESCO01_07_TOT = 0 %}
+{% set PRESCO01_08_TOT = 0 %}
+
+{% for key, data in aggregated_sum %}
+
+{% if data["PRESCO-01_07"] + data["PRESCO-01_08"] > 0 %}
+{% set ncentros = 1 %}
+{% endif %}
+
+{% set ncentros_tot = ncentros_tot + ncentros %}
+
+{% set PRESCO01_01_TOT = PRESCO01_01_TOT + data["PRESCO-01_01"] %}
+{% set PRESCO01_02_TOT = PRESCO01_02_TOT + data["PRESCO-01_02"] %}
+{% set PRESCO01_04_TOT = PRESCO01_04_TOT + data["PRESCO-01_04"] %}
+{% set PRESCO01_05_TOT = PRESCO01_05_TOT + data["PRESCO-01_05"] %}
+{% set PRESCO01_07_TOT = PRESCO01_07_TOT + data["PRESCO-01_07"] %}
+{% set PRESCO01_08_TOT = PRESCO01_08_TOT + data["PRESCO-01_08"] %}
 
 <tr>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td class="td_total_style"></td>
-<td></td>
-<td></td>
-<td class="td_total_style"></td>
-<td></td>
-<td></td>
-<td class="td_total_style"></td>
-<td></td>
-<td></td>
-<td></td>
-<td class="td_total_style"></td>
-<td></td>
-<td></td>
-<td class="td_total_style"></td>
-<td></td>
-<td></td>
-<td class="td_total_style"></td>
-<td></td>
-<td></td>
-<td></td>
-<td class="td_total_style"></td>
-<td></td>
-<td></td>
-<td class="td_total_style"></td>
+<td>{{loop.index}}</td>
+<td>{{key}}</td>
+<td>{{ncentros}}</td>
+<td>{{data["PRESCO-01_01"]}}</td>
+<td>{{data["PRESCO-01_02"]}}</td>
+<td class="td_total_style">{{data["PRESCO-01_01"] + data["PRESCO-01_02"]}}</td>
+<td>{{data["PRESCO-01_04"]}}</td>
+<td>{{data["PRESCO-01_05"]}}</td>
+<td class="td_total_style">{{data["PRESCO-01_04"] + data["PRESCO-01_05"]}}</td>
+<td>{{data["PRESCO-01_07"]}}</td>
+<td>{{data["PRESCO-01_08"]}}</td>
+<td class="td_total_style">{{data["PRESCO-01_07"] + data["PRESCO-01_08"]}}</td>
 </tr>
 
+{% endfor %}
 
 <!-- end data -->
 
 <tr style="background-color:lightgrey;font-weight:bold;">
 <td colspan="2" class="td_title_style">Total</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
+<td>{{ncentros_tot}}</td>
+<td>{{PRESCO01_01_TOT}}</td>
+<td>{{PRESCO01_02_TOT}}</td>
+<td>{{PRESCO01_01_TOT + PRESCO01_02_TOT}}</td>
+<td>{{PRESCO01_04_TOT}}</td>
+<td>{{PRESCO01_05_TOT}}</td>
+<td>{{PRESCO01_04_TOT + PRESCO01_05_TOT}}</td>
+<td>{{PRESCO01_07_TOT}}</td>
+<td>{{PRESCO01_08_TOT}}</td>
+<td>{{PRESCO01_07_TOT + PRESCO01_08_TOT}}</td>
+</tr>
+
+	</tbody>
+</table>
+
+<table border="0" cellpadding="2" cellspacing="0" class="table_data">
+<caption>Código da ficha MGCAS-PRESCO-01 / Sector: Criança</caption>
+
+	<tbody>
+
+		<tr>
+			<td rowspan="3">N&ordm; Ord.</td>
+			<td rowspan="3">Posto administrativo</td>
+			<td colspan="10">Centro Infantis Privados</td>
+		</tr>
+		<tr>
+			<td rowspan="2">N&ordm; de Centros Infantis Privados</td>
+			<td colspan="3">N&ordm; de Educadores</td>
+			<td colspan="3">N&ordm; de Educadores sem formação</td>
+			<td colspan="3">N&ordm; de Crianças atendidas</td>
+		</tr>
+		<tr>
+			<td>F</td>
+			<td>M</td>
+			<td>Total</td>
+			<td>F</td>
+			<td>M</td>
+			<td>Total</td>
+			<td>F</td>
+			<td>M</td>
+			<td>Total</td>
+		</tr>
+
+
+<!-- ini data -->
+
+{% set ncentros = 0 %}
+{% set ncentros_tot = 0 %}
+
+{% set neduf = 0 %}
+{% set nedum = 0 %}
+
+{% set nedusemf = 0 %}
+{% set nedusemm = 0 %}
+
+{% set necrf = 0 %}
+{% set necrm = 0 %}
+
+{% set PRESCO01_10_TOT = 0 %}
+{% set PRESCO01_11_TOT = 0 %}
+{% set PRESCO01_13_TOT = 0 %}
+{% set PRESCO01_14_TOT = 0 %}
+{% set PRESCO01_16_TOT = 0 %}
+{% set PRESCO01_17_TOT = 0 %}
+
+{% for key, data in aggregated_sum %}
+
+{% if data["PRESCO-01_16"] + data["PRESCO-01_17"] > 0 %}
+{% set ncentros = 1 %}
+{% endif %}
+
+{% set ncentros_tot = ncentros_tot + ncentros %}
+
+{% set PRESCO01_10_TOT = PRESCO01_10_TOT + data["PRESCO-01_10"] %}
+{% set PRESCO01_11_TOT = PRESCO01_11_TOT + data["PRESCO-01_11"] %}
+{% set PRESCO01_13_TOT = PRESCO01_13_TOT + data["PRESCO-01_13"] %}
+{% set PRESCO01_14_TOT = PRESCO01_14_TOT + data["PRESCO-01_14"] %}
+{% set PRESCO01_16_TOT = PRESCO01_16_TOT + data["PRESCO-01_16"] %}
+{% set PRESCO01_17_TOT = PRESCO01_17_TOT + data["PRESCO-01_17"] %}
+
+<tr>
+<td>{{loop.index}}</td>
+<td>{{key}}</td>
+<td>{{ncentros_tot}}</td>
+<td>{{data["PRESCO-01_10"]}}</td>
+<td>{{data["PRESCO-01_11"]}}</td>
+<td class="td_total_style">{{data["PRESCO-01_10"] + data["PRESCO-01_11"]}}</td>
+<td>{{data["PRESCO-01_13"]}}</td>
+<td>{{data["PRESCO-01_14"]}}</td>
+<td class="td_total_style">{{data["PRESCO-01_13"] + data["PRESCO-01_14"]}}</td>
+<td>{{data["PRESCO-01_16"]}}</td>
+<td>{{data["PRESCO-01_17"]}}</td>
+<td class="td_total_style">{{data["PRESCO-01_16"] + data["PRESCO-01_17"]}}</td>
+</tr>
+
+{% endfor %}
+
+<!-- end data -->
+
+<tr style="background-color:lightgrey;font-weight:bold;">
+<td colspan="2" class="td_title_style">Total</td>
+<td>{{ncentros_tot}}</td>
+<td>{{PRESCO01_10_TOT}}</td>
+<td>{{PRESCO01_11_TOT}}</td>
+<td>{{PRESCO01_10_TOT + PRESCO01_11_TOT}}</td>
+<td>{{PRESCO01_13_TOT}}</td>
+<td>{{PRESCO01_14_TOT}}</td>
+<td>{{PRESCO01_13_TOT + PRESCO01_14_TOT}}</td>
+<td>{{PRESCO01_16_TOT}}</td>
+<td>{{PRESCO01_17_TOT}}</td>
+<td>{{PRESCO01_16_TOT + PRESCO01_17_TOT}}</td>
+</tr>
+
+	</tbody>
+</table>
+
+<table border="0" cellpadding="2" cellspacing="0" class="table_data">
+<caption>Código da ficha MGCAS-PRESCO-01 / Sector: Criança</caption>
+
+	<tbody>
+
+		<tr>
+			<td rowspan="3">N&ordm; Ord.</td>
+			<td rowspan="3">Posto administrativo</td>
+			<td colspan="7">Escolinhas Comunitárias</td>
+		</tr>
+		<tr>
+			<td rowspan="2">N&ordm; de Escolinhas Comunitárias</td>
+			<td colspan="3">N&ordm; de Animadores</td>
+			<td colspan="3">N&ordm; de Crianças atendidas</td>
+		</tr>
+		<tr>
+			<td>F</td>
+			<td>M</td>
+			<td>Total</td>
+			<td>F</td>
+			<td>M</td>
+			<td>Total</td>
+		</tr>
+
+
+<!-- ini data -->
+
+{% set nesco = 0 %}
+{% set nesco_tot = 0 %}
+
+{% set neanf = 0 %}
+{% set neanm = 0 %}
+
+{% set necrf = 0 %}
+{% set necrm = 0 %}
+
+{% set PRESCO01_19_TOT = 0 %}
+{% set PRESCO01_20_TOT = 0 %}
+{% set PRESCO01_22_TOT = 0 %}
+{% set PRESCO01_23_TOT = 0 %}
+
+{% for key, data in aggregated_sum %}
+
+{% if data["PRESCO-01_22"] + data["PRESCO-01_23"] > 0 %}
+{% set nesco = 1 %}
+{% endif %}
+
+{% set nesco_tot = nesco_tot + nesco %}
+
+{% set PRESCO01_13_TOT = PRESCO01_13_TOT + data["PRESCO-01_13"] %}
+{% set PRESCO01_14_TOT = PRESCO01_14_TOT + data["PRESCO-01_14"] %}
+{% set PRESCO01_16_TOT = PRESCO01_16_TOT + data["PRESCO-01_16"] %}
+{% set PRESCO01_17_TOT = PRESCO01_17_TOT + data["PRESCO-01_17"] %}
+
+<tr>
+<td>{{loop.index}}</td>
+<td>{{key}}</td>
+<td>{{nesco}}</td>
+<td>{{data["PRESCO-01_19"]}}</td>
+<td>{{data["PRESCO-01_20"]}}</td>
+<td class="td_total_style">{{data["PRESCO-01_19"] + data["PRESCO-01_20"]}}</td>
+<td>{{data["PRESCO-01_22"]}}</td>
+<td>{{data["PRESCO-01_23"]}}</td>
+<td class="td_total_style">{{data["PRESCO-01_22"] + data["PRESCO-01_23"]}}</td>
+</tr>
+
+{% endfor %}
+
+<!-- end data -->
+
+<tr style="background-color:lightgrey;font-weight:bold;">
+<td colspan="2" class="td_title_style">Total</td>
+<td>{{nesco_tot}}</td>
+<td>{{PRESCO01_13_TOT}}</td>
+<td>{{PRESCO01_14_TOT}}</td>
+<td>{{PRESCO01_13_TOT + PRESCO01_14_TOT}}</td>
+<td>{{PRESCO01_22_TOT}}</td>
+<td>{{PRESCO01_23_TOT}}</td>
+<td>{{PRESCO01_22_TOT + PRESCO01_23_TOT}}</td>
 </tr>
 
 	</tbody>

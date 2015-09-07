@@ -149,10 +149,6 @@ array_push($direct_children , ['id' => $row[0], 'name' => $row[1]] );
 
 $form_template_file = $form_name . '_' . $le . '.html' ;
 
-$td_data_standard_style = 'text-align:center;vertical-align:middle;border:solid black 1px;';
-$td_total_standard_style = 'text-align:center;vertical-align:middle;border:solid black 1px;background-color:lightgrey;';
-
-
 // acquisisci la lista dei dataelement que sono inclusi nel dataset
 	
 $dataelementids = [];
@@ -212,8 +208,6 @@ $template_array = array(
 	'rep_mes' => $endmonth_pt,
 	'rep_ano' => $endyear,
 	'rep_prv' => $parentname_chosen_ou,
-	'rep_data_style' => $td_data_standard_style,
-	'rep_total_style' => $td_total_standard_style,
 	'aggregated_sum' => $aggregated_sum
 			);
 
