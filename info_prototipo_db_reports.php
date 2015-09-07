@@ -38,9 +38,9 @@ if (!$con) { echo "<p>not connected</p>"; exit; }
 
 switch ($option) {
     case 1:
-
 		echo '<div id="main"><div id="menu">';
-		echo '<div class="bu"><button id="bu_report">Redigir relatório</button></div>';
+		echo '<div class="bu"><button id="bu_report">Redigir relatório</button>'.
+		'<button onclick="javascript:window.print();" id="bu_print">Imprimir</button></div>';
 
 		$result = pg_query($con, "SELECT MAX(level) FROM orgunitlevel");
 		$aresult = pg_fetch_array($result);

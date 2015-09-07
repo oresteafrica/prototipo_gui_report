@@ -26,10 +26,6 @@ $('.tree a').click( function( ) {
 	return false;
 });
 
-
-
-
-
 $('#bu_report').click(function() {
 	var pe = $('#combo_periods_rep').val(); // periodid
 	var fo = $('#combo_forms_rep').val(); // datasetid
@@ -52,11 +48,6 @@ $('#bu_report').click(function() {
 
 	return false;
 });
-
-
-
-
-
 
  
 });
