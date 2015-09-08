@@ -36,11 +36,21 @@ $dbna = $ini_array['dbna'];
 $con = pg_connect ("host=$host dbname=$dbna user=$user password=$pass"); 
 if (!$con) { echo "<p>not connected</p>"; exit; } 
 
+$localhosts = array(
+    '127.0.0.1',
+    'localhost'
+);
+
+$check_debug = '<input type="checkbox" id="debug" name="debug" value="debug" style="display:none;" />';
+if(in_array($_SERVER['REMOTE_ADDR'], $localhosts)){
+	$check_debug = '<input type="checkbox" id="debug" name="debug" value="debug" style="display:inline;" />';
+}
 switch ($option) {
     case 1:
 		echo '<div id="main"><div id="menu">';
 		echo '<div class="bu"><button id="bu_report">Redigir relatório</button>'.
-		'<button onclick="javascript:window.print();" id="bu_print">Imprimir</button></div>';
+		'<button onclick="javascript:window.print();" id="bu_print">Imprimir</button>'.
+		$check_debug.'</div>';
 
 		$result = pg_query($con, "SELECT MAX(level) FROM orgunitlevel");
 		$aresult = pg_fetch_array($result);
@@ -72,8 +82,11 @@ switch ($option) {
 		$ous = $_GET["ous"];
 		if (! check_get('le') ) { exit; }
 		$le = $_GET["le"];
+		//if (! check_get('de') ) { $de = 0; } else { $de = $_GET["de"]; }
 
-		write_report ($con, $pe, $fo, $no, $ous, $le, true, $twig, 0);
+		$de = 0;
+
+		write_report ($con, $pe, $fo, $no, $ous, $le, true, $twig, $de);
 
         break;
     case 3:
@@ -200,14 +213,20 @@ foreach ($direct_children as $dc) {
 }
 
 
+$entidade = '';
+$localidade = '';
+$instituição = '';
 
 
 
 $template_array = array(
-	'rep_dst' => $chosen_ou,
+	'rep_cho' => $chosen_ou,
 	'rep_mes' => $endmonth_pt,
 	'rep_ano' => $endyear,
-	'rep_prv' => $parentname_chosen_ou,
+	'rep_par' => $parentname_chosen_ou,
+	'rep_ent' => $entidade,
+	'rep_loc' => $localidade,
+	'rep_ins' => $instituição,
 	'aggregated_sum' => $aggregated_sum
 			);
 
@@ -279,12 +298,10 @@ switch ($le) {
 	break;
 //---- Distrital -----------------
     case 3:
-		$template = $twig->loadTemplate($form_template_file);
-		echo $template->render($template_array);
-	break;
 //---- Posto Administrativo ------
     case 4:
-		not_yet();
+		$template = $twig->loadTemplate($form_template_file);
+		echo $template->render($template_array);
 	break;
 //--------------------------------
     default:

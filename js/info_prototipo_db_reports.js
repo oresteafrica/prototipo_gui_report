@@ -32,11 +32,12 @@ $('#bu_report').click(function() {
 	var no = $('#treeinfo span').eq(1).text(); // orgunit id
 	var ous = $('#treeinfohide').text(); // orgunit all children id
 	var le = $('#treeinfo span').eq(2).text(); // hierarchy level (1=max)
+	var de = $('#debug').checked?'1':'0'; // debug
 
 	//--------- ini ajax
 	$.ajax({
 	url: ur,
-	data:'option=2&pe='+pe+'&fo='+fo+'&no='+no+'&ous='+ous+'&le='+le,
+	data:'option=2&pe='+pe+'&fo='+fo+'&no='+no+'&ous='+ous+'&le='+le+'&de='+de,
 	type: 'GET',
 	dataType: 'html',
 	beforeSend: function(a){ $('#report').html('<img src="../img/ajax-loader.gif" alt="aguarde">'); },
