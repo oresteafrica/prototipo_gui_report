@@ -217,40 +217,79 @@ foreach ($direct_children as $dc) {
 $entidade = '';
 $localidade = '';
 $instituição = '';
+$mes = $endmonth_pt;
+$ano = $endyear;
+$pa = '';
+$distrito = '';
+$provincia = '';
 
-$template_array = array(
-	'rep_cho'			=> $chosen_ou,
-	'rep_mes' 			=> $endmonth_pt,
-	'rep_ano' 			=> $endyear,
-	'rep_par' 			=> $parentname_chosen_ou,
-	'rep_ent' 			=> $entidade,
-	'rep_loc' 			=> $localidade,
-	'rep_ins' 			=> $instituição,
-	'aggregated_sum'	=> $aggregated_sum
-);
+switch ($le) {
+//---- Nacional -----------------
+	case 1:
+//---- Provincial ----------------
+ 	case 2:
+	break;
+//---- Distrital -----------------
+    case 3:
+		$distrito = $chosen_ou;
+		$provincia = $parentname_chosen_ou;
+	break;
+//---- Posto Administrativo ------
+    case 4:
+		$pa = $chosen_ou;
+		$distrito = $parentname_chosen_ou;
+		$result = pg_query($con, 'SELECT parentid FROM organisationunit WHERE organisationunitid = ' . $parentid_chosen_ou);
+		if (!$result) { echo "<p>Error opening organisationunit</p>\n"; exit; }
+		$temp = pg_fetch_assoc($result)['parentid'];
+		$result = pg_query($con, 'SELECT name FROM organisationunit WHERE organisationunitid = ' . $temp);
+		if (!$result) { echo "<p>Error opening organisationunit</p>\n"; exit; }
+		$provincia = pg_fetch_assoc($result)['name'];
+
+		switch ($form_name) {
+			case 'PROT-02':
+			break;
+			case 'PRESCO-01':
+			break;
+			default:
+				echo '<p style="color:red;font-weight:bold;">incorrect form</p>'; exit;
+		}
+		
+	break;
+//--------------------------------
+    default:
+
+}
+
+
+
 
 //====================================== ini bebug ===========================================================
 if ($debug) {
 
 echo '<h2>From ajax</h2>';
-
 echo '<p>periodid ($pe) = <b>'.$pe.
 	'</b></p><p>datasetid ($fo) = <b>'.$fo.
 	'</b></p><p>orgunit id ($no) = <b>'.$no.
 	'</b></p><p>orgunit all last children id ($ous) = <b>'.$ous.
 	'</b></p><p>Hierarchy level ($le) = <b>'.$le.'</b></p>';
-
+echo '<hr />';
 echo '<h2>From database</h2>';
-
 echo '<p>$parentname_chosen_ou = ' . $parentname_chosen_ou . ' (' . $parentid_chosen_ou . ')</p>';
-
 echo '<p>$endmonth_pt = ' . $endmonth_pt . '</p>';
-
 echo '<p>$endyear = ' . $endyear . '</p>';
-
 echo '<p>$form_name = ' . $form_name . '</p>';
-
 echo '<p>$chosen_ou = ' . $chosen_ou . ' (' . $no . ')</p>';
+echo '<hr />';
+echo '<h2>Processed</h2>';
+echo '<p>$entidade = <b>' . $entidade . '</b></p>';
+echo '<p>$localidade = <b>' . $localidade . '</b></p>';
+echo '<p>$instituição = <b>' . $instituição . '</b></p>';
+echo '<p>$mes = <b>' . $mes . '</b></p>';
+echo '<p>$ano = <b>' . $ano . '</b></p>';
+echo '<p>$pa = <b>' . $pa . '</b></p>';
+echo '<p>$distrito = <b>' . $distrito . '</b></p>';
+echo '<p>$provincia = <b>' . $provincia . '</b></p>';
+echo '<hr />';
 
 !Kint::dump( $direct_children );
 
@@ -277,17 +316,6 @@ return;
 }
 //====================================== end bebug ===========================================================
 
-$rep_cell = [];
-
-switch ($form_name) {
-	case 'PROT-02':
-	break;
-	case 'PRESCO-01':
-	break;
-    default:
-    	echo '<p style="color:red;font-weight:bold;">incorrect form</p>'; exit;
-}
-
 switch ($le) {
 //---- Nacional -----------------
 	case 1:
@@ -297,8 +325,28 @@ switch ($le) {
 	break;
 //---- Distrital -----------------
     case 3:
+		$template_array = array(
+			'rep_cho'			=> $chosen_ou,
+			'rep_mes' 			=> $mes,
+			'rep_ano' 			=> $ano,
+			'rep_par' 			=> $parentname_chosen_ou,
+			'aggregated_sum'	=> $aggregated_sum
+		);
+		$template = $twig->loadTemplate($form_template_file);
+		echo $template->render($template_array);
+	break;
 //---- Posto Administrativo ------
     case 4:
+		$template_array = array(
+			'rep_cho'			=> $chosen_ou,
+			'rep_mes' 			=> $mes,
+			'rep_ano' 			=> $ano,
+			'rep_par' 			=> $parentname_chosen_ou,
+			'rep_ent' 			=> $entidade,
+			'rep_loc' 			=> $localidade,
+			'rep_ins' 			=> $instituição,
+			'aggregated_sum'	=> $aggregated_sum
+		);
 		$template = $twig->loadTemplate($form_template_file);
 		echo $template->render($template_array);
 	break;
