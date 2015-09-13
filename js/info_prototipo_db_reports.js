@@ -1,13 +1,11 @@
 $( document ).ready(function() {
 var ur = document.URL.substring(0,document.URL.indexOf('?')) ; // document URL without GET
 
-
 $('.tree li').each( function() {
 	if( $( this ).children( 'ul' ).length > 0 ) {
 		$( this ).addClass( 'parent' );     
     	}
 });
-
 
 $('.tree a').click( function( ) {
 	var aid = this.id;
@@ -19,9 +17,8 @@ $('.tree a').click( function( ) {
 		ouids.push(this.id);	
 	});
 	if (ouids.length < 1) { ouids.push(this.id); }
-    //$( this ).parent().toggleClass('active');
-    //$( this ).parent().children('ul').slideToggle('fast');
-	$('#treeinfo').html('Estrutura escolhida<br /><br /><b><span>'+atx+'</span><span style="display:none;">'+aid+'</span><span style="display:none;">'+lev+'</span>' );
+	$('#treeinfo').html('Estrutura escolhida<br /><br /><b><span>'+atx+
+		'</span><span style="display:none;">'+aid+'</span><span style="display:none;">'+lev+'</span>' );
 	$('#treeinfohide').text(ouids.join(';'));
 	return false;
 });
@@ -32,7 +29,8 @@ $('#bu_report').click(function() {
 	var no = $('#treeinfo span').eq(1).text(); // orgunit id
 	var ous = $('#treeinfohide').text(); // orgunit all children id
 	var le = $('#treeinfo span').eq(2).text(); // hierarchy level (1=max)
-	var de = $('#debug').checked?'1':'0'; // debug
+	var de = '0';
+	if ($('#debug').is(":checked")) { de = 'A'; } else { de = 'B'; }
 
 	//--------- ini ajax
 	$.ajax({

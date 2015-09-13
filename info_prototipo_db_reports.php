@@ -41,16 +41,17 @@ $localhosts = array(
     'localhost'
 );
 
-$check_debug = '<input type="checkbox" id="debug" name="debug" value="debug" style="display:none;" />';
+$display_check_debug = 'none';
 if(in_array($_SERVER['REMOTE_ADDR'], $localhosts)){
-	$check_debug = '<input type="checkbox" id="debug" name="debug" value="debug" style="display:inline;" />';
+	$display_check_debug = 'inline';
 }
+
 switch ($option) {
     case 1:
 		echo '<div id="main"><div id="menu">';
 		echo '<div class="bu"><button id="bu_report">Redigir relatório</button>'.
 		'<button onclick="javascript:window.print();" id="bu_print">Imprimir</button>'.
-		$check_debug.'</div>';
+		'<input type="checkbox" id="debug" style="display:'.$display_check_debug.';" /></div>';
 
 		$result = pg_query($con, "SELECT MAX(level) FROM orgunitlevel");
 		$aresult = pg_fetch_array($result);
@@ -82,12 +83,11 @@ switch ($option) {
 		$ous = $_GET["ous"];
 		if (! check_get('le') ) { exit; }
 		$le = $_GET["le"];
-		//if (! check_get('de') ) { $de = 0; } else { $de = $_GET["de"]; }
-
-		$de = 0;
-
+		if (! check_get('de') ) { exit; }
+		$de = $_GET["de"];
+		
 		write_report ($con, $pe, $fo, $no, $ous, $le, true, $twig, $de);
-
+        
         break;
     case 3:
  
@@ -106,7 +106,7 @@ function not_yet () {
 	echo '<p>Níveis acima do distrital serão redigidos pelo software Masinfo/Devinfo</p>';
 }
 //----------------------------------------------------------------------------------------------------------
-function write_report ($con, $pe, $fo, $no, $ous, $le, $paper, $twig, $debug) {
+function write_report ($con, $pe, $fo, $no, $ous, $le, $paper, $twig, $de) {
 /*
 $con : connection do database
 $pe : periodid
@@ -116,8 +116,12 @@ $ous: orgunit all last children id
 $le : hierarchy level
 $paper : 1/0 paper/masinfo 
 $twig : compulsory variable for generating template
+$de if == A then $debug = true
 $debug if true displays var info
 */
+
+
+if ( $de == 'A' ) { $debug = true; } else { $debug = false; }
 
 $result = pg_query($con, 'SELECT periodtypeid, startdate, enddate FROM period WHERE periodid = ' . $pe);
 if (!$result) { echo "<p>Error opening organisationunit</p>\n"; exit; }
@@ -162,8 +166,6 @@ array_push($direct_children , ['id' => $row[0], 'name' => $row[1]] );
 
 $form_template_file = $form_name . '_' . $le . '.html' ;
 
-// acquisisci la lista dei dataelement que sono inclusi nel dataset
-	
 $dataelementids = [];
 $result = pg_query($con, 'SELECT dataelementid FROM datasetmembers WHERE datasetid = ' . $fo);
 if (!$result) { echo "<p>Error opening datasetmembers</p>\n"; exit; }
@@ -212,34 +214,31 @@ foreach ($direct_children as $dc) {
 	$aggregated_sum[$dc['name']] = $row;
 }
 
-
 $entidade = '';
 $localidade = '';
 $instituição = '';
 
-
-
 $template_array = array(
-	'rep_cho' => $chosen_ou,
-	'rep_mes' => $endmonth_pt,
-	'rep_ano' => $endyear,
-	'rep_par' => $parentname_chosen_ou,
-	'rep_ent' => $entidade,
-	'rep_loc' => $localidade,
-	'rep_ins' => $instituição,
-	'aggregated_sum' => $aggregated_sum
-			);
-
-
-
-
+	'rep_cho'			=> $chosen_ou,
+	'rep_mes' 			=> $endmonth_pt,
+	'rep_ano' 			=> $endyear,
+	'rep_par' 			=> $parentname_chosen_ou,
+	'rep_ent' 			=> $entidade,
+	'rep_loc' 			=> $localidade,
+	'rep_ins' 			=> $instituição,
+	'aggregated_sum'	=> $aggregated_sum
+);
 
 //====================================== ini bebug ===========================================================
 if ($debug) {
 
 echo '<h2>From ajax</h2>';
 
-echo '<p>periodid ($pe) = <b>'.$pe.'</b></p><p>datasetid ($fo) = <b>'.$fo.'</b></p><p>orgunit id ($no) = <b>'.$no.'</b></p><p>orgunit all last children id ($ous) = <b>'.$ous.'</b></p><p>Hierarchy level ($le) = <b>'.$le.'</b></p>';
+echo '<p>periodid ($pe) = <b>'.$pe.
+	'</b></p><p>datasetid ($fo) = <b>'.$fo.
+	'</b></p><p>orgunit id ($no) = <b>'.$no.
+	'</b></p><p>orgunit all last children id ($ous) = <b>'.$ous.
+	'</b></p><p>Hierarchy level ($le) = <b>'.$le.'</b></p>';
 
 echo '<h2>From database</h2>';
 
@@ -253,26 +252,30 @@ echo '<p>$form_name = ' . $form_name . '</p>';
 
 echo '<p>$chosen_ou = ' . $chosen_ou . ' (' . $no . ')</p>';
 
-
 !Kint::dump( $direct_children );
 
-echo '<p>$dataelementids = ' . implode(';', $dataelementids) .  '</p>';
+echo '<label>$dataelementids</label><br /><textarea style="width:80%">' . implode('; ', $dataelementids) .  '</textarea>';
 
+echo '<br />';
+echo '<br />';
 !Kint::dump( $fulldataelementnames );
 
+echo '<br />';
 !Kint::dump( $result_from_direct_children );
 
+echo '<br />';
 !Kint::dump( $aggregated_sum );
 
-// echo '<p>$aggregated_sum[\'PA Maluana\'][\'PROT-02_07\'] = '. $aggregated_sum['PA Maluana']['PROT-02_07'] . '</p>';
-
+if ($le == 3) {
+echo '<br />';
+echo $direct_children[0]['name'];
+!Kint::dump( $aggregated_sum[$direct_children[0]['name']] );
+}
 
 return;
 
 }
 //====================================== end bebug ===========================================================
-
-
 
 $rep_cell = [];
 
@@ -285,13 +288,9 @@ switch ($form_name) {
     	echo '<p style="color:red;font-weight:bold;">incorrect form</p>'; exit;
 }
 
-
-
 switch ($le) {
 //---- Nacional -----------------
 	case 1:
-		not_yet();
-	break;
 //---- Provincial ----------------
  	case 2:
 		not_yet();
@@ -307,10 +306,6 @@ switch ($le) {
     default:
     	echo '<p style="color:red;font-weight:bold;">incorrect level</p>'; exit;
 }
-
-
-
-
 
 return;
 }
