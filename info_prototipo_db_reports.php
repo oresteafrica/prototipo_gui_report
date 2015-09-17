@@ -166,6 +166,9 @@ array_push($direct_children , ['id' => $row[0], 'name' => $row[1]] );
 
 $form_template_file = $form_name . '_' . $le . '.html' ;
 
+if (! file_exists('tpl/'.$form_template_file)) { echo "<p>template file does not exist</p>"; exit; }
+
+
 $dataelementids = [];
 $result = pg_query($con, 'SELECT dataelementid FROM datasetmembers WHERE datasetid = ' . $fo);
 if (!$result) { echo "<p>Error opening datasetmembers</p>\n"; exit; }
