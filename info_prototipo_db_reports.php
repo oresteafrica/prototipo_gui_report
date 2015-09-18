@@ -38,7 +38,8 @@ if (!$con) { echo "<p>not connected</p>"; exit; }
 
 $localhosts = array(
     '127.0.0.1',
-    'localhost'
+    'localhost',
+	'::1'
 );
 
 $display_check_debug = 'none';
@@ -268,6 +269,11 @@ switch ($le) {
 
 //====================================== ini bebug ===========================================================
 if ($debug) {
+
+
+echo '<h2>Server</h2>';
+echo '<p>$_SERVER[\'REMOTE_ADDR\'] = ' . $_SERVER['REMOTE_ADDR'] . '</p>';
+echo '<hr />';
 
 echo '<h2>From ajax</h2>';
 echo '<p>periodid ($pe) = <b>'.$pe.
