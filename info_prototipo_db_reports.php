@@ -97,10 +97,6 @@ switch ($option) {
        echo '<p style="color:red;font-weight:bold;">incorrect option</p>'; exit;
 }
 
-
-//!Kint::dump(  ); 
-
-
 //----------------------------------------------------------------------------------------------------------
 function not_yet () {
 	echo '<h3>É possível redigir o relatório apenas a nível distrital</h3>';
@@ -120,7 +116,6 @@ $twig : compulsory variable for generating template
 $de if == A then $debug = true
 $debug if true displays var info
 */
-
 
 if ( $de == 'A' ) { $debug = true; } else { $debug = false; }
 
@@ -338,7 +333,6 @@ switch ($le) {
 
 //====================================== ini bebug ===========================================================
 if ($debug) {
-
 
 echo '<h2>Server</h2>';
 echo '<p>$_SERVER[\'REMOTE_ADDR\'] = ' . $_SERVER['REMOTE_ADDR'] . '</p>';
