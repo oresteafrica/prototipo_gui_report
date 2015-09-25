@@ -42,6 +42,12 @@ list_table ($con, 'dataelementgroupmembers', ['dataelementgroupid', 'dataelement
 list_table ($con, 'dataset', ['datasetid', 'name', 'periodtypeid']);
 list_table ($con, 'datasetmembers', ['datasetid', 'dataelementid']);
 list_table ($con, 'datasetsource', ['datasetid', 'sourceid']);
+list_table ($con, 'users', ['userid', 'username', 'openid', 'password', 'passwordlastupdated', 'lastlogin', 'restoretoken', 'restorecode', 'restoreexpiry', 'selfregistered', 'invitation', 'disabled', 'created']);
+list_table ($con, 'userrole', ['userroleid', 'uid', 'code', 'created', 'lastupdated', 'name', 'description', 'userid', 'publicaccess']);
+list_table ($con, 'userroleauthorities', ['userroleid', 'authority']);
+list_table ($con, 'userdatavieworgunits', ['userinfoid', 'organisationunitid']);
+list_table ($con, 'usermembership', ['organisationunitid', 'userinfoid']);
+list_table ($con, 'usersetting', ['userinfoid', 'name', 'value']);
 
 
 function list_table ($con,$table, $fields) {
