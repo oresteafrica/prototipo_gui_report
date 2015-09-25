@@ -1,5 +1,83 @@
 <meta content="text/html; charset=UTF-8" http-equiv="content-type" />
-<title></title>
+<title>PASD-01</title>
+<style>
+.div_report {
+	font-family:Arial;
+	margin-left:auto;
+	margin-right:auto;
+	width:80%;
+}
+.table_header {
+	border-collapse:collapse;
+	table-layout:fixed;
+	width:90%;
+	margin-left:auto;
+	margin-right:auto;
+}
+.table_header td {
+	text-align:center;
+	vertical-align:middle;
+}
+.table_header2 {
+	border-collapse:collapse;
+	table-layout:fixed;
+	width:100%;
+	margin-top:40px;
+	margin-left:auto;
+	margin-right:auto;
+	margin-bottom:10px;
+	height:100px
+}
+.table_header2 td {
+	text-align:center;
+	vertical-align:middle;
+	border:solid black 1px;
+	padding:10px;
+
+}
+.table_info {
+	border-collapse:collapse;
+	table-layout:fixed;
+	width:100%;
+	margin-top:40px;
+	margin-left:auto;
+	margin-right:auto;
+	height:100px;
+}
+.table_info td {
+	text-align:left;
+	vertical-align:top;
+}
+.table_info td:nth-child(even) {
+	font-weight:bold;
+}
+.table_data {
+	border-collapse:collapse;
+	table-layout:fixed;
+	width:100%;
+	margin-top:40px;
+	margin-left:auto;
+	margin-right:auto;
+	font-size:small;
+}
+.table_data td {
+	text-align:center;
+	vertical-align:middle;
+	border:solid black 1px;
+}
+.td_total {
+	text-align:center;
+	vertical-align:middle;
+	border:solid black 1px;
+	background-color:#c0c0c0;
+}
+.table_data td:nth-child(odd) {
+	width:90%;
+	background-color:#c0c0c0;
+}
+
+</style>
+
 <table border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse;table-layout:fixed;width:90%;margin-left:auto;margin-right:auto;">
 	<tbody>
 		<tr style="height:100px;">
@@ -18,48 +96,73 @@
 <table border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse;table-layout:fixed;width:100%;margin-top:40px;margin-left:auto;margin-right:auto;margin-bottom:20px;height:100px">
 	<tbody>
 		<tr>
-			<td style="text-align:center;vertical-align:middle;border:solid black 1px;">FICHA DE ENTRADA DO PROGRAMA DE APOIO SOCIAL DIRECTO COM DADOS RECOLHIDOS PELA DELEGA&Ccedil;&Atilde;O DO INAS</td>
+			<td>FICHA DE ENTRADA DO PROGRAMA DE APOIO SOCIAL DIRECTO COM DADOS RECOLHIDOS PELA DELEGA&Ccedil;&Atilde;O DO INAS</td>
 		</tr>
 	</tbody>
 </table>
 
-<table border="0" cellpadding="4" cellspacing="0" style="border-collapse:collapse;table-layout:fixed;width:100%;margin-top:40px;margin-left:auto;margin-right:auto;height:100px;font-size:small;">
+<table border="0" cellpadding="0" cellspacing="0" class="table_info">
 	<tbody>
 		<tr>
-			<td style="text-align:center;vertical-align:middle;border:solid black 1px;width:90%;background-color:#c0c0c0;">N&deg; de Agregados Familiares com Criancas Desnutridas(AFCD )</td>
-			<td style="text-align:center;vertical-align:middle;border:solid black 1px;">&nbsp;</td>
+			<td colspan="3">Nome da entidade que realizou a actividade:</td>
+			<td>{{rep_ent}}</td>
 		</tr>
 		<tr>
-			<td style="text-align:center;vertical-align:middle;border:solid black 1px;width:90%;background-color:#c0c0c0;">&nbsp;N&deg; de Agregados Familiares com Doentes Cronicos Acamados(AFDCA)</td>
-			<td style="text-align:center;vertical-align:middle;border:solid black 1px;">&nbsp;</td>
+			<td colspan="3">Local da realiza&ccedil;&atilde;o da actividade:</td>
+			<td>{{rep_loc}}</td>
 		</tr>
 		<tr>
-			<td style="text-align:center;vertical-align:middle;border:solid black 1px;width:90%;background-color:#c0c0c0;">N&deg; de Agregados Familiares com Pessoas em TARV(AFPT )</td>
-			<td style="text-align:center;vertical-align:middle;border:solid black 1px;">&nbsp;</td>
+			<td>Distrito: </td>
+			<td class="rel_head" id="presco01_mensal_provincia">{{rep_par}}</td>
+			<td>Posto Administrativo: </td>
+			<td class="rel_head" id="presco01_mensal_distrito">{{rep_cho}}</td>
 		</tr>
 		<tr>
-			<td style="text-align:center;vertical-align:middle;border:solid black 1px;width:90%;background-color:#c0c0c0;">N&deg; de Agregados Familiares com Criancas sem Aleitamento Materno(AFCs/AM )</td>
-			<td style="text-align:center;vertical-align:middle;border:solid black 1px;">&nbsp;</td>
+			<td>Mês: </td>
+			<td class="rel_head" id="presco01_mensal_mes">{{rep_mes}}</td>
+			<td>Ano: </td>
+			<td class="rel_head" id="presco01_mensal_ano">{{rep_ano}}</td>
+		</tr>
+	</tbody>
+</table>
+
+<table class="table_data" border="0" cellpadding="4" cellspacing="0">
+	<tbody>
+		<tr>
+			<td>N&deg; de Agregados Familiares com Criancas Desnutridas(AFCD )</td>
+			<td>{{rep_frm["PASD-01_01"]}}</td>
 		</tr>
 		<tr>
-			<td style="text-align:center;vertical-align:middle;border:solid black 1px;width:90%;background-color:#c0c0c0;">N&deg; de Agregados Familiares com Chefes Temporariamente Incapacitados para o Trabalho(AFCTIT )</td>
-			<td style="text-align:center;vertical-align:middle;border:solid black 1px;">&nbsp;</td>
+			<td>&nbsp;N&deg; de Agregados Familiares com Doentes Cronicos Acamados(AFDCA)</td>
+			<td>{{rep_frm["PASD-01_02"]}}</td>
 		</tr>
 		<tr>
-			<td style="text-align:center;vertical-align:middle;border:solid black 1px;width:90%;background-color:#c0c0c0;">N&deg; de AFCC de 12 a 18</td>
-			<td style="text-align:center;vertical-align:middle;border:solid black 1px;">&nbsp;</td>
+			<td>N&deg; de Agregados Familiares com Pessoas em TARV(AFPT )</td>
+			<td>{{rep_frm["PASD-01_03"]}}</td>
 		</tr>
 		<tr>
-			<td style="text-align:center;vertical-align:middle;border:solid black 1px;width:90%;background-color:#c0c0c0;">N&deg; de Pessoas Assoladas por Choques(PAC )</td>
-			<td style="text-align:center;vertical-align:middle;border:solid black 1px;">&nbsp;</td>
+			<td>N&deg; de Agregados Familiares com Criancas sem Aleitamento Materno(AFCs/AM )</td>
+			<td>{{rep_frm["PASD-01_04"]}}</td>
 		</tr>
 		<tr>
-			<td style="text-align:center;vertical-align:middle;border:solid black 1px;width:90%;background-color:#c0c0c0;">N&deg; de&nbsp; Pessoas com Deficiencia que receberam Meios de Compensa&ccedil;&atilde;o(PDMC )</td>
-			<td style="text-align:center;vertical-align:middle;border:solid black 1px;">&nbsp;</td>
+			<td>N&deg; de Agregados Familiares com Chefes Temporariamente Incapacitados para o Trabalho(AFCTIT )</td>
+			<td>{{rep_frm["PASD-01_05"]}}</td>
 		</tr>
 		<tr>
-			<td style="text-align:center;vertical-align:middle;border:solid black 1px;width:90%;background-color:#c0c0c0;">N&deg; de Agregados Familiares com Criancas em Desnutri&ccedil;&atilde;o Cr&oacute;nica(AFCDC )</td>
-			<td style="text-align:center;vertical-align:middle;border:solid black 1px;">&nbsp;</td>
+			<td>N&deg; de AFCC de 12 a 18</td>
+			<td>{{rep_frm["PASD-01_06"]}}</td>
+		</tr>
+		<tr>
+			<td>N&deg; de Pessoas Assoladas por Choques(PAC )</td>
+			<td>{{rep_frm["PASD-01_07"]}}</td>
+		</tr>
+		<tr>
+			<td>N&deg; de&nbsp; Pessoas com Deficiencia que receberam Meios de Compensa&ccedil;&atilde;o(PDMC )</td>
+			<td>{{rep_frm["PASD-01_08"]}}</td>
+		</tr>
+		<tr>
+			<td>N&deg; de Agregados Familiares com Criancas em Desnutri&ccedil;&atilde;o Cr&oacute;nica(AFCDC )</td>
+			<td>{{rep_frm["PASD-01_09"]}}</td>
 		</tr>
 	</tbody>
 </table>
