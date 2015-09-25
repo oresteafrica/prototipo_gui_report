@@ -245,10 +245,10 @@ switch ($le) {
 
 		if (! $debug) {
 			$template_array = array(
-				'rep_cho'			=> $chosen_ou,
+				'rep_dst'			=> $chosen_ou,
 				'rep_mes' 			=> $mes,
 				'rep_ano' 			=> $ano,
-				'rep_par' 			=> $parentname_chosen_ou,
+				'rep_prv' 			=> $parentname_chosen_ou,
 				'aggregated_sum'	=> $aggregated_sum
 			);
 			$template = $twig->loadTemplate($form_template_file);
