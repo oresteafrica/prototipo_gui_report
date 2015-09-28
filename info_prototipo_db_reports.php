@@ -119,6 +119,8 @@ $debug if true displays var info
 
 if ( $de == 'A' ) { $debug = true; } else { $debug = false; }
 
+if ( $le < 3 ) { not_yet(); exit; }
+
 // ini form name. Variable $fo = datasetid coming from table datavalue via ajax
 $result = pg_query($con, 'SELECT name FROM dataset WHERE datasetid = ' . $fo);
 if (!$result) { echo "<p>Error opening dataset</p>\n"; exit; }
@@ -178,9 +180,20 @@ foreach ($dataelementids as $di) {
 sort($fulldataelementnames, SORT_STRING);
 // end list of data elements names where value types = integer
 
+// ini list of data elements names where value types != integer
+$notintdataelementnames = [];
+foreach ($dataelementids as $di) {
+	$query = 'SELECT name FROM dataelement WHERE valuetype != \'int\' AND dataelementid = ' . $di ;
+	$result = pg_query($con, $query );
+	if (!$result) { echo "<p>Error opening dataelement</p>\n"; exit; }
+	$resultname = pg_fetch_assoc($result)['name'];
+	if ($resultname) { array_push($notintdataelementnames, $resultname); }
+}
+// end list of data elements names where value types != integer
+
 $entidade = '';
 $localidade = '';
-$instituição = '';
+$instituicao = '';
 $mes = $endmonth_pt;
 $ano = $endyear;
 $pa = '';
@@ -286,19 +299,32 @@ switch ($le) {
 
 		$form_value = [];
 		if ($result_from_pa) {
-
 			// ini build form table from array $result_from_pa
 			foreach ($fulldataelementnames as $dn) {
 				$arsearch = array_search($dn,array_column($result_from_pa, 'dataelementname'));
 				if ( $arsearch !== false ) {
 					$form_value[$dn] = $result_from_pa[$arsearch]['value'];
-					// array_push($form_value, [$dn,$result_from_pa[$arsearch]['value']]);
 				} else {
 					$form_value[$dn] = '';
-					//array_push($form_value, [$dn,'']);
 				}
 			}
 			// end build form table from array $result_from_pa
+
+			// ini build form texts from array $result_from_pa
+			foreach ($notintdataelementnames as $dn) {
+				$arsearch = array_search($dn,array_column($result_from_pa, 'dataelementname'));
+				if ( $arsearch !== false ) {
+					$form_text[$dn] = $result_from_pa[$arsearch]['value'];
+				} else {
+					$form_text[$dn] = '';
+				}
+			}
+			// end build form texts from array $result_from_pa
+
+			$entidade = isset($form_text['PROT-02_nome_ent'])?$form_text['PROT-02_nome_ent']:'';
+			$localidade = isset($form_text['PROT-02_local'])?$form_text['PROT-02_local']:'';
+			$instituicao = isset($form_text['PRESCO-01_nome_ist'])?$form_text['PRESCO-01_nome_ist']:'';
+
 
 			if (! $debug) {
 				$template_array = array(
@@ -308,13 +334,13 @@ switch ($le) {
 					'rep_par' 			=> $parentname_chosen_ou,
 					'rep_ent' 			=> $entidade,
 					'rep_loc' 			=> $localidade,
-					'rep_ins' 			=> $instituição,
+					'rep_ins' 			=> $instituicao,
 					'rep_frm'			=> $form_value
 				);
 				$template = $twig->loadTemplate($form_template_file);
 				echo $template->render($template_array);
 			}
-		} else {
+		} else {	// if ($result_from_pa)
 			echo '<p>Não existem dados de acordo com as informações seguintes</p>';
 			echo '<p>ano <b>' . $endyear . '</b></p>';
 			echo '<p>mês <b>' . $endmonth_pt . '</b></p>';
@@ -355,7 +381,7 @@ echo '<hr />';
 echo '<h2>Processed</h2>';
 echo '<p>$entidade = <b>' . $entidade . '</b></p>';
 echo '<p>$localidade = <b>' . $localidade . '</b></p>';
-echo '<p>$instituição = <b>' . $instituição . '</b></p>';
+echo '<p>$instituicao = <b>' . $instituicao . '</b></p>';
 echo '<p>$mes = <b>' . $mes . '</b></p>';
 echo '<p>$ano = <b>' . $ano . '</b></p>';
 echo '<p>$pa = <b>' . $pa . '</b></p>';
@@ -370,6 +396,10 @@ echo '<label>$dataelementids</label><br /><textarea style="width:80%">' . implod
 echo '<br />';
 echo '<br />';
 !Kint::dump( $fulldataelementnames );
+
+echo '<br />';
+echo '<br />';
+!Kint::dump( $notintdataelementnames );
 
 echo '<br />';
 !Kint::dump( $result_from_direct_children );
@@ -388,6 +418,8 @@ echo '<br />';
 !Kint::dump( $result_from_pa );
 echo '<br />';
 !Kint::dump( $form_value );
+echo '<br />';
+!Kint::dump( $form_text );
 
 return;
 
