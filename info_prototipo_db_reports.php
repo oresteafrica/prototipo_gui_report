@@ -301,7 +301,8 @@ switch ($le) {
 		if ($result_from_pa) {
 			// ini build form table from array $result_from_pa
 			foreach ($fulldataelementnames as $dn) {
-				$arsearch = array_search($dn,array_column($result_from_pa, 'dataelementname'));
+				$arrcol = array_column($result_from_pa, 'dataelementname');
+				$arsearch = array_search($dn,$arrcol);
 				if ( $arsearch !== false ) {
 					$form_value[$dn] = $result_from_pa[$arsearch]['value'];
 				} else {
