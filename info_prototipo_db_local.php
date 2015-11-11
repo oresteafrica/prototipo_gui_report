@@ -32,6 +32,9 @@ if (!$con) { echo "<p>not connected</p>"; exit; }
 
 echo '<style></style>';
 
+
+list_all_tables ($con,$dbName);
+
 list_table ($con, 'datavalue', ['dataelementid', 'periodid', 'sourceid', 'value', 'storedby']);
 list_table ($con, 'organisationunit', ['organisationunitid', 'uid', 'name', 'parentid', 'coordinates']);
 list_table ($con, 'period', ['periodid', 'periodtypeid', 'startdate', 'enddate']);
@@ -49,6 +52,18 @@ list_table ($con, 'userdatavieworgunits', ['userinfoid', 'organisationunitid']);
 list_table ($con, 'usermembership', ['organisationunitid', 'userinfoid']);
 list_table ($con, 'usersetting', ['userinfoid', 'name', 'value']);
 
+
+function list_all_tables ($con,$dbName) {
+//$result = pg_query($con, 'SELECT * FROM ' . $dbName . '.tables');
+$result = pg_query($con, 'SELECT * FROM information_schema.tables where table_schema = \'public\'');
+echo '<hr />';
+echo '<h3>'.$dbName.'</h3>';
+echo '<hr />';
+while ($row = pg_fetch_row($result)) {
+	echo implode(' | ',$row) . '<br />';
+}
+echo '<hr />';
+}
 
 function list_table ($con,$table, $fields) {
 $selected = implode(', ',$fields);
