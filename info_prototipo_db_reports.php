@@ -505,9 +505,10 @@ return $combo;
 }
 //----------------------------------------------------------------------------------------------------------
 function month_pt_from_month_num ($num) {
+$int = (int)$num;
 $meses = ['Janeiro','Fevereiro','Marco','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
-$i = (int) $num -1;
-return $meses[$i];
+$i = $int -1;
+return $meses[$i].' ('.$i.')';
 }
 //----------------------------------------------------------------------------------------------------------
 function create_combo_from_periods ($con) {
