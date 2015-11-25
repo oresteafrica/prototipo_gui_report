@@ -508,7 +508,7 @@ function month_pt_from_month_num ($num) {
 $int = (int)$num;
 $meses = ['Janeiro','Fevereiro','Marco','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
 $i = $int -1;
-return $meses[$i].' ('.$i.')';
+return $meses[$i].' ('.($i+1).')';
 }
 //----------------------------------------------------------------------------------------------------------
 function create_combo_from_periods ($con) {
@@ -522,14 +522,14 @@ while ($r = pg_fetch_row($result)) {
 	$nomeperiodo =  $periods['pt'][array_search($r[1], $periods['en'])];
 	
 	$startday = substr($r[2], 8, 2);
-	$startmonth_pt = month_pt_from_month_num(substr($r[2], 6, 2));
+	$startmonth_pt = month_pt_from_month_num(substr($r[2], 5, 2));
 	$startyear = substr($r[2], 0, 4);
 
 	$endday = substr($r[3], 8, 2);
-	$endmonth_pt = month_pt_from_month_num(substr($r[3], 6, 2));
+	$endmonth_pt = month_pt_from_month_num(substr($r[3], 5, 2));
 	$endyear = substr($r[3], 0, 4);
 	
-	$option_text = $nomeperiodo . ' - de ' . $startday . '/' . $startmonth_pt. '/' . $startyear . ' até ' . $endday . '/' . $endmonth_pt. '/' . $endyear;
+	$option_text = $nomeperiodo . ' - de ' . $startday . '/' . $startmonth_pt. '/' . $startyear . ' até ' . $endday . '/' . $endmonth_pt. '/' . $endyear . " ($r[1] $r[2] $r[3])";
 	$combo .= '<option value="'.$r[0].'">'.$option_text.'</option>';
 }
 
