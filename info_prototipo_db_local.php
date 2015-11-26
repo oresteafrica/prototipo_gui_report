@@ -20,11 +20,12 @@ color:red;
 ini_set('display_errors', '1');
 error_reporting(E_ALL | E_STRICT);
 
-//$host = '127.0.0.1';
-$host = 'localhost';
-$user = 'oreste'; 
-$pass = 'vaffax'; 
-$dbName = 'mgcas9_dhis2';
+$ini_array = parse_ini_file('../cron/prototipo.ini');
+$host = $ini_array['host'];
+$user = $ini_array['user'];
+$pass = $ini_array['pass'];
+$dbna = $ini_array['dbna'];
+
 echo "<p>before create connection</p>"; 
 $con = pg_connect ("host=$host dbname=$dbName user=$user password=$pass"); 
 echo "<p>After connection is created</p>"; 
