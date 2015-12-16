@@ -27,14 +27,14 @@ $pass = $ini_array['pass'];
 $dbna = $ini_array['dbna'];
 
 echo "<p>before create connection</p>"; 
-$con = pg_connect ("host=$host dbname=$dbName user=$user password=$pass"); 
+$con = pg_connect ("host=$host dbname=$dbna user=$user password=$pass"); 
 echo "<p>After connection is created</p>"; 
 if (!$con) { echo "<p>not connected</p>"; exit; } 
 
 echo '<style></style>';
 
 
-list_all_tables ($con,$dbName);
+list_all_tables ($con,$dbna);
 
 list_table ($con, 'datavalue', ['dataelementid', 'periodid', 'sourceid', 'value', 'storedby']);
 list_table ($con, 'organisationunit', ['organisationunitid', 'uid', 'name', 'parentid', 'coordinates']);
