@@ -1,6 +1,9 @@
 $( document ).ready(function() {
 var ur = document.URL.substring(0,document.URL.indexOf('?')) ; // document URL without GET
 
+$('#spanform').text($('#combo_forms_rep').val());
+
+
 $('.tree li').each( function() {
 	if( $( this ).children( 'ul' ).length > 0 ) {
 		$( this ).addClass( 'parent' );     
@@ -20,6 +23,8 @@ $('.tree a').click( function( ) {
 	$('#treeinfo').html('Estrutura escolhida<br /><br /><b><span>'+atx+
 		'</span><span style="display:none;">'+aid+'</span><span style="display:none;">'+lev+'</span>' );
 	$('#treeinfohide').text(ouids.join(';'));
+	$('#spanniv').text(lev);
+	showMasinfo();
 	return false;
 });
 
@@ -34,10 +39,30 @@ $('#bu_report').click(function() {
 	$('#report').attr('src', 'index_reports.php?pe='+pe+'&fo='+fo+'&no='+no+'&ous='+ous+'&le='+le+'&de='+de);
 });
 
+$('#bu_masinfo').click(function() {
+	var pe = $('#combo_periods_rep').val(); // periodid
+	var fo = $('#combo_forms_rep').val(); // datasetid
+	var no = $('#treeinfo span').eq(1).text(); // orgunit id
+	var ous = $('#treeinfohide').text(); // orgunit all children id
+	var le = $('#treeinfo span').eq(2).text(); // hierarchy level (1=max)
+	window.location.href = 'masinfo.php?pe='+pe+'&fo='+fo+'&no='+no;
+});
+
 $('#bu_activity').click(function() {
 	if ($('#debug').is(":checked")) { de = 'A'; } else { de = 'B'; }
 	$('#report').attr('src', 'index_activity.php');
 });
+
+$('#combo_forms_rep').change(function() {
+	$('#spanform').text($(this).val());
+	showMasinfo();
+});
+
+function showMasinfo() {
+	if ( ($('#spanform').text() == '221') && ($('#spanniv').text() == '3') ) {
+		$('#bu_masinfo').show(); } else { $('#bu_masinfo').hide();
+	}
+}
 
  
 });

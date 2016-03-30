@@ -18,6 +18,7 @@ require 'common_subs.php';
 <button id="bu_report">Redigir relatório</button>
 <button id="bu_activity">Actividade</button>
 <button onclick="javascript:window.print();" id="bu_print">Imprimir</button>
+<button id="bu_masinfo" style="display:none;">Exportar para Masinfo</button>
 <input type="checkbox" id="debug" style="display:'.$display_check_debug.';" /></div>
 
 <?php
@@ -42,7 +43,14 @@ echo $combo_forms;
 <div id="treeinfohide"></div>
 <?php echo generatePageTree($aous_level); ?>
 </div>
+
+<label style="float:left;margin-left:10px;">nível </label><span id="spanniv" style="float:left;margin-left:4px;"></span>
+<label style="float:left;margin-left:10px;">formulário n.  </label><span id="spanform" style="float:left;margin-left:4px;"></span>
+
+
 </div>
+
+
 
 <iframe id="report" frameborder="0" style="min-height:900px;">
 <p>Este navegador (browser) não é atualizado.</p>
