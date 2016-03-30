@@ -112,7 +112,7 @@ $combo .= '</select></div>';
 return $combo;
 }
 //----------------------------------------------------------------------------------------------------------
-function month_pt_from_month_num ($num) {
+function month_pt_from_month_num ($num = 1) {
 $meses = ['Janeiro','Fevereiro','Marco','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
 $i = (int) $num;
 $i = $i - 1;  
