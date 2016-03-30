@@ -114,7 +114,7 @@ return $combo;
 //----------------------------------------------------------------------------------------------------------
 function month_pt_from_month_num ($num) {
 $meses = ['Janeiro','Fevereiro','Marco','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
-$i = (int) $num -1;
+$i = (int) ($num -1);
 return $meses[$i];
 }
 //----------------------------------------------------------------------------------------------------------

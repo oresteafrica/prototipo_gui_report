@@ -45,7 +45,13 @@ $('#bu_masinfo').click(function() {
 	var no = $('#treeinfo span').eq(1).text(); // orgunit id
 	var ous = $('#treeinfohide').text(); // orgunit all children id
 	var le = $('#treeinfo span').eq(2).text(); // hierarchy level (1=max)
-	window.location.href = 'masinfo.php?pe='+pe+'&fo='+fo+'&no='+no;
+	var de = '0';
+	if ($('#debug').is(":checked")) { de = 'A'; } else { de = 'B'; }
+	
+	$('#report').attr('src', 'masinfo.php?pe='+pe+'&fo='+fo+'&no='+no+'&ous='+ous+'&le='+le+'&de='+de);
+	
+	//window.location.href = 'masinfo.php?pe='+pe+'&fo='+fo+'&no='+no+'&ous='+ous+'&le='+le;
+	
 });
 
 $('#bu_activity').click(function() {
