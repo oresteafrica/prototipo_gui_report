@@ -10,6 +10,9 @@
 </head>
 <body>
 
+<h2>Estrutura organica MGCAS</h2>
+<p>Aguarda-se validação <span class="micro">(Clique na pequena seta branca para expandir)</span></p>
+
 <div id="divtree">
 
 <?php
@@ -52,7 +55,6 @@ $ulli = ob_get_clean();
 echo $ulli;
 
 if ($debug) {
-//!Kint::dump( $tree );
 echo '<hr />';
 echo '$aous_level[10][\'id\'] = '.$aous_level[10]['id'].' | $aous_level[10][\'nome\'] = '.$aous_level[10]['nome'].
 ' | $aous_level[10][\'referencia\'] = '.$aous_level[10]['referencia'];
@@ -60,8 +62,6 @@ echo '<hr />';
 !Kint::dump( $aous_level );
 }
 
-
-//----------------------------------------------------------------------------------------------------------
 //----------------------------------------------------------------------------------------------------------
 function print_list($array, $parent=1) {
 
@@ -73,13 +73,6 @@ function print_list($array, $parent=1) {
             print '</li>';
     }   }
     print '</ul>';
-}
-//----------------------------------------------------------------------------------------------------------
-function generateTreeFromTable($db, $table, $id, $parentid, $name, $sort){
-
-	$tree = [];
-
-    return $tree;
 }
 //----------------------------------------------------------------------------------------------------------
 function create_array_from_table ($db, $table, $sort) {
@@ -108,6 +101,25 @@ CREATE TABLE `new_adm_ter` (
 
 </div>
 
+<div id="divnotes">
+
+<p>É disponível para download o ficheiro CSV útil para importação na instância DHIS2.</p>
+<p>O ficheiro é construido a partir de uma base de dados, portanto è sempre atualizado.</p>
+<p>O CSV é construido de acordo com as regras estabelecidas nos manuais DHIS2</p>
+<p>em particular o seguinte:</p>
+<p><a href="http://dhis2.github.io/dhis2-docs/master/en/developer/html/ch01s11.html#d5e997" target="_blank">CSV metadata import</a></p>
+<p><a href="https://github.com/dhis2/dhis2-utils/blob/master/resources/sql/uid.sql" target="_blank"> dhis2-utils uid.sql</a></p>
+<p>Unique identifier<br />
+A unique identifier (UID) is a semi-random series of letters and numbers used by DHIS2 to identify specific resources.<br />
+UIDs begin with a letter, and are followed by exactly 10 letters or digits.</p>
+
+<button id="bu_ou_csv_dhis2">Download CSV</button>
+
+</div>
+
+<iframe style="display:none;" id="frame_download">
+<p>Este navegador (browser) não é atualizado.</p>
+</iframe>
 
 </body>
 </html>
