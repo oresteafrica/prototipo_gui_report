@@ -1,0 +1,137 @@
+<meta content="text/html; charset=UTF-8" http-equiv="content-type" />
+<title>Relatório mensal distrital PRESCO-01</title>
+<style>
+.table_data {
+	font-family:Arial;
+	border-collapse:collapse;
+	width:100%;
+	margin-top:20px;
+	margin-left:auto;
+	margin-right:auto;
+	height:100px;
+	font-size:x-small;
+}
+.table_data td {
+	border:solid black 1px;
+	vertical-align:middle;
+	text-align:left;
+	height:14px;
+}
+#bu_download {
+	margin-top:20px;
+}
+</style>
+
+<table class="table_data">
+
+	<tbody>
+
+		<tr style="font-size:large;font-weight:bold;height:30px;">
+			<td colspan="6">Data entry Spreadsheet</td>
+			<td></td>
+			<td></td>
+		</tr>
+
+		<tr style="height:30px;">
+			<td colspan="6"></td>
+			<td></td>
+			<td></td>
+		</tr>
+
+		<tr>
+			<td>Sector</td>
+			<td colspan="5">2 Criança</td>
+			<td></td>
+			<td></td>
+		</tr>
+
+		<tr>
+			<td>Class</td>
+			<td colspan="5">Educação Pré-Escolar</td>
+			<td></td>
+			<td></td>
+		</tr>
+
+		<tr>
+			<td>Indicator</td>
+			<td colspan="5">Crianças atendidas nos centros infantis públicos</td>
+			<td></td>
+			<td></td>
+		</tr>
+
+		<tr>
+			<td colspan="6"></td>
+			<td></td>
+			<td></td>
+		</tr>
+
+		<tr>
+			<td style="font-weight:bold;">Unit</td>
+			<td colspan="5">Número</td>
+			<td style="font-weight:bold;">Decimals</td>
+			<td></td>
+		</tr>
+
+		<tr>
+			<td colspan="6"></td>
+			<td></td>
+			<td></td>
+		</tr>
+
+		<tr>
+			<td>Time</td>
+			<td>Area id</td>
+			<td>Area name</td>
+			<td>Data value</td>
+			<td>Subgroup</td>
+			<td>Source</td>
+			<td>Footnotes</td>
+			<td>Denominator</td>
+		</tr>
+
+		<tr>
+			<td colspan="6"></td>
+			<td></td>
+			<td></td>
+		</tr>
+
+<!-- ini data -->
+<!-- end data -->
+
+<tr>
+	<td>7/2015</td>
+	<td>AFRMOZ010007</td>
+	<td>SDSMAS de Moamba</td>
+	<td>0</td>
+	<td>Masculino</td>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>7/2015</td>
+	<td>AFRMOZ010007</td>
+	<td>SDSMAS de Moamba</td>
+	<td>0</td>
+	<td>Feminino</td>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>7/2015</td>
+	<td>AFRMOZ010007</td>
+	<td>SDSMAS de Moamba</td>
+	<td>0</td>
+	<td>Total</td>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+
+	</tbody>
+</table>
+
+<button id="bu_download" onclick='javascript:window.location="download.php"'>Download</button>
