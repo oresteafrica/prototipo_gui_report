@@ -1,5 +1,6 @@
 <?php
-
+require 'kint/Kint.class.php';
+$debug = false;
 $ini_array = parse_ini_file('../cron/moz.ini');
 $sdsn = $ini_array['sdsn'];
 $user = $ini_array['user'];
@@ -33,6 +34,7 @@ $array_table = [];
 foreach ($tabquery as $tabres) {
 	array_push($array_table, $tabres);
 }
+
 foreach ($array_table as &$row) {
 	$id = $row['uid'];
 	$parent = $row['parent'];
@@ -47,8 +49,15 @@ $array_table[$key_mgcas]['parent'] = '';
 
 $csv_string = 'name,uid,code,parent'."\n";
 
-foreach ($array_table as $row) {
-	$csv_string .= $row['name'].','.$row['uid'].','.$row['code'].','.$row['parent']."\n";
+foreach ($array_table as $record) {
+	$csv_string .= $record['name'].','.$record['uid'].','.$record['code'].','.$record['parent']."\n";
+}
+
+if ($debug) {
+echo '<hr />';
+!Kint::dump( $array_table );
+echo '<hr />';
+exit;
 }
 
 header("Content-type: text/csv");
