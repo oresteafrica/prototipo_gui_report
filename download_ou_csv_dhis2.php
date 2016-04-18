@@ -1,6 +1,5 @@
 <?php
-date_default_timezone_set('date_default_timezone_set('UTC');');
-
+date_default_timezone_set('Africa/Maputo');
 if($_GET['type'] === '') { echo '<p style="color:red;font-weight:bold;">'.'type'.' is an empty string</p>'; exit; }
 if($_GET['type'] === false) { echo '<p style="color:red;font-weight:bold;">'.'type'.' is false</p>'; exit; }
 if($_GET['type'] === null) { echo '<p style="color:red;font-weight:bold;">'.'type'.' is null</p>'; exit; }
