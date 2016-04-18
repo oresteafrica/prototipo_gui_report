@@ -1,4 +1,5 @@
 <?php
+date_default_timezone_set('date_default_timezone_set('UTC');');
 
 if($_GET['type'] === '') { echo '<p style="color:red;font-weight:bold;">'.'type'.' is an empty string</p>'; exit; }
 if($_GET['type'] === false) { echo '<p style="color:red;font-weight:bold;">'.'type'.' is false</p>'; exit; }
@@ -56,6 +57,7 @@ $array_table[$key_mgcas]['parent'] = '';
 
 $downloadable_string = '';
 $ext = '';
+$head = '';
 $type = $_GET["type"];
 $today = date('Y-m-d');
 
@@ -66,6 +68,7 @@ switch ($type) {
 			$downloadable_string .= $record['name'].','.$record['uid'].','.$record['code'].','.$record['parent']."\n";
 		}
 		$ext = 'csv';
+		$head = 'text/csv';
         break;
     case 'xml':
 		$downloadable_string = '<?xml version=\'1.0\'?>'."\n";
@@ -79,6 +82,7 @@ switch ($type) {
 		$downloadable_string .= '</organisationUnits>'."\n";
 		$downloadable_string .= '</metadata>'."\n";
 		$ext = 'xml';
+		$head = 'text/xml';
         break;
     case 'dxf':
 		$downloadable_string = '<?xml version=\'1.0\'?>'."\n";
@@ -95,6 +99,7 @@ switch ($type) {
 		$downloadable_string .= '</organisationUnits>'."\n";
 		$downloadable_string .= '</dxf>'."\n";
 		$ext = 'xml';
+		$head = 'text/xml';
         break;
     default:
 		echo '<p style="color:red;font-weight:bold;">'.'type not correct</p>'; exit;
@@ -109,7 +114,7 @@ echo '<hr />';
 exit;
 }
 
-header("Content-type: text/csv");
+header("Content-type:".$head);
 header("Content-Disposition: attachment; filename=estrutura_organica.".$ext);
 echo $downloadable_string;
 //----------------------------------------------------------------------------------------------------------
