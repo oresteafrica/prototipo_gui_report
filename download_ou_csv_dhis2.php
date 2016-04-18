@@ -1,4 +1,11 @@
 <?php
+
+if($_GET['type'] === '') { echo '<p style="color:red;font-weight:bold;">'.'type'.' is an empty string</p>'; exit; }
+if($_GET['type'] === false) { echo '<p style="color:red;font-weight:bold;">'.'type'.' is false</p>'; exit; }
+if($_GET['type'] === null) { echo '<p style="color:red;font-weight:bold;">'.'type'.' is null</p>'; exit; }
+if(!isset($_GET['type'])) { echo '<p style="color:red;font-weight:bold;">'.'type'.' is not set</p>'; exit; }
+if(empty($_GET['type'])) { echo '<p style="color:red;font-weight:bold;">'.'type'.' is empty</p>'; exit; }
+
 require 'kint/Kint.class.php';
 $debug = false;
 $ini_array = parse_ini_file('../cron/moz.ini');
@@ -47,11 +54,53 @@ foreach ($array_table as &$row) {
 $key_mgcas = array_search('MGCAS', $array_table);
 $array_table[$key_mgcas]['parent'] = '';
 
-$csv_string = 'name,uid,code,parent'."\n";
+$downloadable_string = '';
+$ext = '';
+$type = $_GET["type"];
+$today = date('Y-m-d');
 
-foreach ($array_table as $record) {
-	$csv_string .= $record['name'].','.$record['uid'].','.$record['code'].','.$record['parent']."\n";
+switch ($type) {
+    case 'csv':
+		$downloadable_string = 'name,uid,code,parent'."\n";
+		foreach ($array_table as $record) {
+			$downloadable_string .= $record['name'].','.$record['uid'].','.$record['code'].','.$record['parent']."\n";
+		}
+		$ext = 'csv';
+        break;
+    case 'xml':
+		$downloadable_string = '<?xml version=\'1.0\'?>'."\n";
+		$downloadable_string = '<metadata>'."\n";
+		$downloadable_string .= '<organisationUnits>'."\n";
+		foreach ($array_table as $record) {
+			$downloadable_string .= '<organisationUnit id="'.$record['uid'].'" name="'.$record['name'].'">'."\n";
+			$downloadable_string .= '<parent id="'.$record['parent'].'"/>'."\n";
+			$downloadable_string .= '</organisationUnit>'."\n";
+		}
+		$downloadable_string .= '</organisationUnits>'."\n";
+		$downloadable_string .= '</metadata>'."\n";
+		$ext = 'xml';
+        break;
+    case 'dxf':
+		$downloadable_string = '<?xml version=\'1.0\'?>'."\n";
+		$downloadable_string .= '<dxf xmlns="http://dhis2.org/schema/dxf/1.0"; minorVersion="1.3" exported="'.$today.'">'."\n";
+		$downloadable_string .= '<organisationUnits>'."\n";
+		foreach ($array_table as $record) {
+			$downloadable_string .= '<organisationUnit>'."\n";
+			$downloadable_string .= '<id>'.$record['code'].'</id>'."\n";
+			$downloadable_string .= '<uid>'.$record['uid'].'</uid>'."\n";
+			$downloadable_string .= '<name>'.$record['name'].'</name>'."\n";
+			$downloadable_string .= '<code>'.$record['code'].'</code>'."\n";
+			$downloadable_string .= '</organisationUnit>'."\n";
+		}
+		$downloadable_string .= '</organisationUnits>'."\n";
+		$downloadable_string .= '</dxf>'."\n";
+		$ext = 'xml';
+        break;
+    default:
+		echo '<p style="color:red;font-weight:bold;">'.'type not correct</p>'; exit;
+        break;
 }
+
 
 if ($debug) {
 echo '<hr />';
@@ -61,8 +110,8 @@ exit;
 }
 
 header("Content-type: text/csv");
-header("Content-Disposition: attachment; filename=estrutura_organica.csv");
-echo $csv_string;
+header("Content-Disposition: attachment; filename=estrutura_organica.".$ext);
+echo $downloadable_string;
 //----------------------------------------------------------------------------------------------------------
 function generate_uid_dhis2() {
     $schar = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';

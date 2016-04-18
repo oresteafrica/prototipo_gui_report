@@ -102,10 +102,13 @@ CREATE TABLE `new_adm_ter` (
 </div>
 
 <div id="divnotes">
-
+<p>Os documentos de referência para a construção da estrutura organica são os seguintes:</p>
+<p><a href="http://mgcas.in/ref_docs/Boletim_divisao_administrativa.pdf" target="_blank">Lei n. 26/2013 do 18 de Dezembro</a></p>
+<p><a href="http://mgcas.in/ref_docs/lista_nova_divisao_administrativa_moz.pdf" target="_blank">Lista da nova divisão administrativa de Moçambique</a></p>
+<hr />
 <p>É disponível para download o ficheiro CSV útil para importação na instância DHIS2.</p>
 <p>O ficheiro é construido a partir de uma base de dados, portanto è sempre atualizado.</p>
-<p>O CSV é construido de acordo com as regras estabelecidas nos manuais DHIS2</p>
+<p>O ficheiro é construido de acordo com as regras estabelecidas nos manuais DHIS2</p>
 <p>em particular o seguinte:</p>
 <p><a href="http://dhis2.github.io/dhis2-docs/master/en/developer/html/ch01s11.html#d5e997" target="_blank">CSV metadata import</a></p>
 <p><a href="https://github.com/dhis2/dhis2-utils/blob/master/resources/sql/uid.sql" target="_blank"> dhis2-utils uid.sql</a></p>
@@ -114,6 +117,8 @@ A unique identifier (UID) is a semi-random series of letters and numbers used by
 UIDs begin with a letter, and are followed by exactly 10 letters or digits.</p>
 
 <button id="bu_ou_csv_dhis2">Download CSV</button>
+<button id="bu_ou_xml_dhis2">Download XML</button>
+<button id="bu_ou_dxf_dhis2">Download DXF</button>
 
 </div>
 
