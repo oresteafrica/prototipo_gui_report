@@ -117,7 +117,6 @@ A unique identifier (UID) is a semi-random series of letters and numbers used by
 UIDs begin with a letter, and are followed by exactly 10 letters or digits.</p>
 
 <button id="bu_ou_csv_dhis2">Download CSV</button>
-<button id="bu_ou_xml_dhis2">Download XML</button>
 <button id="bu_ou_dxf_dhis2">Download DXF</button>
 
 </div>

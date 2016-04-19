@@ -34,7 +34,7 @@ foreach ($array_ids as &$row) {
 	$row['uid'] = $uid;
 }
 
-$sql = "SELECT nome as name, id as uid, id as code, referencia as parent FROM new_adm_ter ORDER BY id ASC";
+$sql = "SELECT nome as name, id as uid, id as code, referencia as parent, nivel as level FROM new_adm_ter ORDER BY id ASC";
 $tabquery = $db->query($sql);
 $tabquery->setFetchMode(PDO::FETCH_ASSOC);
 $array_table = [];
@@ -69,34 +69,28 @@ switch ($type) {
 		$ext = 'csv';
 		$head = 'text/csv';
         break;
-    case 'xml':
-		$downloadable_string = '<?xml version=\'1.0\'?>'."\n";
-		$downloadable_string = '<metadata>'."\n";
-		$downloadable_string .= '<organisationUnits>'."\n";
-		foreach ($array_table as $record) {
-			$downloadable_string .= '<organisationUnit id="'.$record['uid'].'" name="'.$record['name'].'">'."\n";
-			$downloadable_string .= '<parent id="'.$record['parent'].'"/>'."\n";
-			$downloadable_string .= '</organisationUnit>'."\n";
-		}
-		$downloadable_string .= '</organisationUnits>'."\n";
-		$downloadable_string .= '</metadata>'."\n";
-		$ext = 'xml';
-		$head = 'text/xml';
-        break;
     case 'dxf':
 		$downloadable_string = '<?xml version=\'1.0\'?>'."\n";
-		$downloadable_string .= '<dxf xmlns="http://dhis2.org/schema/dxf/1.0"; minorVersion="1.3" exported="'.$today.'">'."\n";
+		$downloadable_string .= '<metaData xmlns="http://dhis2.org/schema/dxf/2.0"; created="'.$today.'">'."\n";
 		$downloadable_string .= '<organisationUnits>'."\n";
 		foreach ($array_table as $record) {
-			$downloadable_string .= '<organisationUnit>'."\n";
-			$downloadable_string .= '<id>'.$record['code'].'</id>'."\n";
-			$downloadable_string .= '<uid>'.$record['uid'].'</uid>'."\n";
-			$downloadable_string .= '<name>'.$record['name'].'</name>'."\n";
-			$downloadable_string .= '<code>'.$record['code'].'</code>'."\n";
+			$downloadable_string .= '<organisationUnit ';
+			$downloadable_string .= 'code="'.$record['code'].'" ';
+			$downloadable_string .= 'name="'.$record['name'].'" ';
+			$downloadable_string .= 'id="'.$record['code'].'" ';
+			$downloadable_string .= 'uid="'.$record['code'].'" ';
+			$downloadable_string .= 'level="'.$record['level'].'"';
+			$downloadable_string .= '>'."\n";
+			$downloadable_string .= '<externalAccess>false</externalAccess>'."\n";
+			if ( $record['parent'] != '' ) {
+				$downloadable_string .= '<parent uid="'.$record['parent'].'">'."\n";
+				$downloadable_string .= '<externalAccess>false</externalAccess>'."\n";
+				$downloadable_string .= '</parent>'."\n";
+			}
 			$downloadable_string .= '</organisationUnit>'."\n";
 		}
 		$downloadable_string .= '</organisationUnits>'."\n";
-		$downloadable_string .= '</dxf>'."\n";
+		$downloadable_string .= '</metaData>'."\n";
 		$ext = 'xml';
 		$head = 'text/xml';
         break;
@@ -107,6 +101,7 @@ switch ($type) {
 
 
 if ($debug) {
+echo $downloadable_string;
 echo '<hr />';
 !Kint::dump( $array_table );
 echo '<hr />';
@@ -118,7 +113,7 @@ header("Content-Disposition: attachment; filename=estrutura_organica.".$ext);
 echo $downloadable_string;
 //----------------------------------------------------------------------------------------------------------
 function generate_uid_dhis2() {
-    $schar = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $char = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
     $alpha = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 	$first = $char[rand(0, strlen($char) - 1)];
     $second = '';
