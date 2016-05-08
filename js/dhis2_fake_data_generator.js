@@ -27,7 +27,7 @@ function afterSuccess() {
 	$('#submit-btn').show();
 	$('progress').delay(500).fadeOut();
 	if ($('#output').text()==0) { alert('Something got wrong with the upload. Try again later.'); return false; }
-	get_datasets_names();
+	get_datasets_names(path + 'dhis2_get_n_datasets.php?f=' + path + $('#output').text());
 }
 //----------------------------------------------------------------------------------------------------------------------
 function beforeSubmit(){
@@ -70,9 +70,9 @@ function bytesToSize(bytes) {
 	return Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[i];
 }
 //----------------------------------------------------------------------------------------------------------------------
-function get_datasets_names() {
+function get_datasets_names(url) {
 	$.ajax({
-		url: path + 'dhis2_get_n_datasets.php?f='+$('#output').text(),
+		url: url,
 		type: 'GET',
 		dataType: 'html',
 		beforeSend: function(a){},
