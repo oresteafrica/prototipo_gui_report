@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset='utf-8'>
+	<link rel="stylesheet" href="css/dhis2_fake_data_generator.css">
+	<script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript" src="js/jquery.form.min.js"></script>
+	<script type="text/javascript" src="js/dhis2_fake_data_generator.js"></script>
+</head>
+<body>
+<div id="upload-wrapper">
+	<div align="center">
+		<h2>DHIS2 fake data generator</h2>
+		<p style="font-weight:bold;">Upload DHIS2 xml file</p>
+		<p style="font-size:xx-small;">Input dataSet, xml format from DHIS2<br />This application will provide fake data CSV format</p>
+		<form action="dhis2_fake_data_generator.php" method="post" enctype="multipart/form-data" id="MyUploadForm">
+		<input name="FileInput" id="FileInput" type="file" />
+		<input type="submit" id="submit-btn" value="Upload" />
+</form>
+		<div class="all_dimensions">
+			<div class="dimensions">
+				<p style="font-size:x-small;margin-top:20px;">Choose period and dataset</p>
+			</div>
+			<div class="dimensions">
+				<label>Month</label>
+				<select id="dimension_months">
+					<option value="01">January</option>
+					<option value="02">February</option>
+					<option value="03">March</option>
+					<option value="04">April</option>
+					<option value="05">May</option>
+					<option value="06">June</option>
+					<option value="07">July</option>
+					<option value="08">August</option>
+					<option value="09">September</option>
+					<option value="10">October</option>
+					<option value="11">November</option>
+					<option value="12">December</option>
+				</select>
+			</div>
+			<div class="dimensions"><label>Year</label>
+				<select id="dimension_years"></select>
+			</div>
+			<div class="dimensions"><label>Dataset</label>
+				<select id="dataset_list"></select>
+			</div>
+			<div class="dimensions"><label>Do CSV</label>
+				<button id="bu_generate_csv">GO</button>
+			</div>
+		</div>
+<div id="progressbox" ><progress max="100" value="1"></progress></div>
+<div id="output"></div>
+</div>
+</div>
+
+<div id="divhelp">
+	<img src="img/Screen_Shot_dataset.png" alt="export_xml" />
+	<div>
+		<p>Export Data set from DHIS2 XML uncompressed as you see in the picture.</p>
+		<p>Upload XML file</p>
+		<p>After upload, 3 select combos will appear.</p>
+		<p>Select month and year in order to choose the period.</p>
+		<p>Select the dataset and press "GO"</p>
+		<p>After few seconds a download interface box will appear.</p>
+		<p>Press download, csv file will be saved in your computer.</p>
+		<p>Values are numeric, randomly generated from 1 to 10 integers.</p>
+		<p>If you need to modify the values, edit csv file with a spreadsheet application.</p>
+		<p>If you have any question, use the following link:</p>
+		<p><a href="http://oreste.parlatano.org/wp/?page_id=22" target="_blank">Send message</a></p>
+	</div>
+</div>
+
+</body>
+</html>

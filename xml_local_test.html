@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset='utf-8'>
+	<script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript">
+		$( document ).ready(function() {
+			$.ajax({
+				url: 'dataSet.xml',
+				type: 'GET',
+				dataType: 'xml',
+				beforeSend: function(a){},
+				success: function(a){
+					$('#res').append(a);
+				},
+				error: function(a,b,c){ alert( 'get_datasets_names('+url+')\na = ' + a.responseText + '\nb = ' + b + '\nc = ' + c ) },
+				complete: function(a,b){}
+			});		
+		});
+	</script>
+</head>
+<body>
+
+<div id="res"></div>
+
+
+
+</body>
+</html>
