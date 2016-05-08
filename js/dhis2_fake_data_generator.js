@@ -71,6 +71,8 @@ function bytesToSize(bytes) {
 }
 //----------------------------------------------------------------------------------------------------------------------
 function get_datasets_names(url) {
+// test url = http://localhost/prototipo/dhis2_get_n_datasets.php?f=http://localhost/prototipo/uploads/6169043388.xml
+	alert(url);
 	$.ajax({
 		url: url,
 		type: 'GET',
