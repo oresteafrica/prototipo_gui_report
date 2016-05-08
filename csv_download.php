@@ -4,25 +4,14 @@
 // localhost/prototipo/csv_download.php?f=http://localhost/prototipo/uploads/2213522638.xml&p=201601&d=ckpiSgvwKxg
 // f = file, p = period (yyyymm), d = dataset
 
-require 'kint/Kint.class.php';
-$debug = false;
-
 if (! ( check_get('f') and check_get('p') and check_get('d') ) ) { exit; }
+
+date_default_timezone_set('Africa/Maputo');
 
 $period = $_GET['p'];
 $dataSetId = $_GET['d'];
 $xml_file = $_GET['f'];
 $timestamp = date('YmdHis');
-
-if ($debug) {
-	echo '$period = '.$period.'<br />';
-	echo '$dataSetId = '.$dataSetId.'<br />';
-	echo '$xml_file = '.$xml_file.'<br />';
-	echo is_url_exist($xml_file)?'<span style="font-weight:bold;color:green;">File exists</span><br />':'<span style="font-weight:bold;color:red;">FILE DO NO EXISTS</span><br />';
-	echo '$timestamp = '.$timestamp;
-	echo '<hr />';
-}
-
 $name = 'name';
 $id = 'id';
 $ele = [];
@@ -55,7 +44,7 @@ if (!is_null($dataSet)) {
 			}
 		}
 	}
-} else { if ($debug) echo '$dataSet is null'; }
+} else { exit; }
 
 $csv_title = array('dataelement','period','orgunit','categoryoptioncombo','attroptioncombo','value');
 
@@ -71,16 +60,7 @@ foreach($ous as $ou){
 }
 
 array_unshift($csv,$csv_title);
-
-if ($debug) {
-	echo '<br /><br />';
-	Kint::dump( $ele );
-	Kint::dump( $ous );
-	Kint::dump( $csv );
-} else {
-	array_to_csv($csv, 'dhis2_fake_data_'.$dataSetname.'_'.$timestamp.'.csv');
-}
-
+array_to_csv($csv, 'dhis2_fake_data_'.$dataSetname.'_'.$timestamp.'.csv');
 
 //----------------------------------------------------------------------------------------------------------
 function array_to_csv($input_array, $output_file_name, $delimiter = ',') {
