@@ -72,7 +72,7 @@ function bytesToSize(bytes) {
 //----------------------------------------------------------------------------------------------------------------------
 function get_datasets_names() {
 	$.ajax({
-		url: 'dhis2_get_n_datasets.php?f='+$('#output').text(),
+		url: path + 'dhis2_get_n_datasets.php?f='+$('#output').text(),
 		type: 'GET',
 		dataType: 'html',
 		beforeSend: function(a){},
