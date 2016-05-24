@@ -68,10 +68,11 @@ function print_list($array, $parent=1) {
 	if ( $parent>1) print '<ul>'; else print '<ul id="ultree">';
     for($i=$parent, $ni=count($array); $i < $ni; $i++){
         if ($array[$i]['referencia'] == $parent) {
-            print '<li>'.$array[$i]['nome'];
+            print '<li>'.$array[$i]['nome'].' <span style="font-size:xx-small;">('.$array[$i]['id'].')</span>';
             print_list($array, $array[$i]['id']);  # recurse
             print '</li>';
-    }   }
+		}   
+    }
     print '</ul>';
 }
 //----------------------------------------------------------------------------------------------------------
